@@ -1,0 +1,558 @@
+/* ESTILOS GLOBALES Y VARIABLES */
+:root {
+    --color-eucalyptus-green: #82a893; /* Verde Salvia/Eucalipto */
+    --color-soft-green: #e9f2ee; /* Verde muy claro para fondos */
+    --color-gold: #c29f62; /* Dorado ocre para acentos */
+    --color-dark: #333;
+    --color-light: #fff;
+    --font-heading: 'Playfair Display', serif;
+    --font-body: 'Lora', serif;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Establecer el alto del HTML y Body al 100% del viewport */
+html, body {
+    height: 100%;
+    margin: 0;
+    overflow: hidden; /* Evita el scroll general en desktop */
+    font-family: var(--font-body);
+    line-height: 1.7;
+    color: var(--color-dark);
+    background-color: var(--color-light);
+}
+/* ========================================================
+   ESTRUCTURA PRINCIPAL (DESKTOP)
+   ======================================================== */
+#app-container {
+    display: flex;
+    height: 100vh; /* Ocupa el 100% de la altura visible de la pantalla */
+    width: 100%;
+}
+
+/* PANEL IZQUIERDO: IMAGEN Y CARRUSEL */
+.side-image-container {
+    width: 85%;
+    height: 100vh; /* Ocupa toda la altura y es fijo */
+    position: relative; /* Cambiado de sticky a relative para que sea un panel estático */
+    overflow: hidden;
+    color: white;
+    text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.4);
+    z-index: 50; 
+}
+
+.image-carousel {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+}
+
+.carousel-slide {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+    transition: opacity 1.5s ease-in-out;
+    opacity: 0;
+}
+
+.carousel-slide.active {
+    opacity: 1;
+}
+
+.hero-text {
+    position: absolute;
+    bottom: 5%;
+    left: 10%;
+    z-index: 10;
+    text-align: left;
+}
+
+.hero-text h1 {
+    font-family: var(--font-heading);
+    font-size: 4em;
+    margin-bottom: 5px;
+    line-height: 1;
+}
+
+.hero-text p {
+    font-size: 1.1em;
+    max-width: 80%;
+}
+
+/* PANEL DERECHO: CONTENIDO SCROLLABLE */
+.content-panel {
+    width: 50%;
+    height: 100vh; /* Ocupa toda la altura */
+    overflow-y: auto; /* PERMITE EL SCROLL SOLO EN ESTA SECCIÓN */
+    padding-top: 0; /* Ya no es necesario el padding top */
+    z-index: 10;
+}
+
+/* ========================================================
+   NAVEGACIÓN / MENU HAMBURGUESA
+   ======================================================== */
+.menu-toggle {
+    display: none; /* Ocultar por defecto en desktop */
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    z-index: 1001; 
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 10px;
+}
+
+/* ... otros estilos de menú ... */
+.bar {
+    width: 25px;
+    height: 3px;
+    background-color: white;
+    margin: 4px 0;
+    transition: 0.4s;
+}
+
+.mobile-menu {
+    display: none; /* Se mostrará solo en móvil por JS */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 70%;
+    height: 100%;
+    background-color: rgba(255, 255, 255, 0.98);
+    box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+    padding-top: 100px;
+    z-index: 900;
+    transform: translateX(-100%);
+    transition: transform 0.3s ease-out;
+}
+
+.mobile-menu.open {
+    transform: translateX(0);
+}
+
+.mobile-menu a {
+    display: block;
+    padding: 15px 30px;
+    text-decoration: none;
+    color: var(--color-dark);
+    font-size: 1.2em;
+    border-bottom: 1px solid #eee;
+    font-family: var(--font-heading);
+}
+
+/* ========================================================
+   ESTILOS DE SECCIÓN
+   ======================================================== */
+.content-section {
+    padding: 60px 10%;
+    text-align: center;
+    border-bottom: 1px solid #f0f0f0;
+}
+/* Asegurar que la primera sección del panel derecho sea visible */
+.hero-content-right {
+    min-height: 100vh; /* Asegura que la sección inicial ocupa al menos 100% de la altura */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 0; /* Quitar padding para centrar mejor el contenido */
+
+
+    /* --- CAMBIOS CLAVE PARA EL FONDO --- */
+    background-image: url('img/features/fondo1.webp'); /* Tu imagen del eucalipto */
+    background-size: 140%; /* Usa un porcentaje para que sea grande pero deje espacio */
+    background-repeat: no-repeat;
+    background-position: center center;
+    /* ----------------------------------- */
+}
+
+.content-section h2 {
+    font-family: var(--font-heading);
+    font-size: 2.5em;
+    margin-bottom: 30px;
+    color: var(--color-eucalyptus-green);
+}
+
+.light-bg {
+    background-color: var(--color-soft-green);
+}
+
+.text-invitacion {
+    max-width: 600px;
+    margin: 0 auto;
+    font-size: 1.1em;
+}
+
+/* Estilo de Wreath (Corona de Eucalipto) */
+.eucalyptus-wreath {
+    max-width: 600px;
+    margin: 0 auto 40px;
+    padding: 0; /* Ya no necesita el padding extra */
+    
+    /* --- ELIMINAR PROPIEDADES DE FONDO --- */
+    /* background-image: url('fondo1.webp'); */ 
+    /* background-size: contain; */
+    /* background-repeat: no-repeat; */
+    /* background-position: center; */
+    /* -------------------------------------- */
+    
+    font-style: italic;
+    color: var(--color-dark);
+    text-align: center; /* Asegurar que el texto esté centrado */
+    z-index: 2; /* Opcional: para asegurar que el texto esté sobre el fondo */
+}
+
+.date-large {
+    font-family: var(--font-heading);
+    font-size: 1.6em;
+    line-height: 1.2;
+}
+
+.place-large {
+    font-size: 1.1em;
+    margin-top: 10px;
+}
+
+/* ========================================================
+   ENLACE "VER DETALLES" CON FLECHA Y REBOTE
+   ======================================================== */
+/* Contenedor del enlace que maneja el espacio y el color */
+.view-details-container {
+    display: flex; /* Permite alinear el texto y la flecha */
+    flex-direction: column; /* Apila el texto y la flecha verticalmente */
+    align-items: center;
+    text-decoration: none; /* Asegura que no haya subrayado */
+    color: #666; /* Color gris suave */
+    font-size: 0.9em;
+
+    margin-top: 15px; /* Separación del texto de la fecha */
+    cursor: pointer;
+    transition: color 0.3s;
+
+    transition: border-bottom-color 0.3s;
+}
+
+.view-details-text {
+    /* El texto del enlace no tiene subrayado, pero tendrá un borde de color */
+    /* padding-bottom: 5px;  */
+    /* transition: border-bottom-color 0.3s; */
+     transition: color 0.3s
+}
+
+.view-details-container:hover .view-details-text {
+    /* Al hacer hover, el texto puede cambiar de color y el borde también */
+    color: var(--color-eucalyptus-green);
+    /* border-bottom-color: var(--color-eucalyptus-green); */
+}
+
+/* Dibuja la flecha (V) separada y controlamos el rebote */
+.view-details-arrow-icon {
+    display: inline-block;
+    width: 20px; /* Tamaño más grande que el anterior */
+    height: 20px;
+    border: solid #666; /* Color gris oscuro */
+    border-width: 0 3px 3px 0; /* Un poco más gruesa */
+    transform: rotate(45deg); /* Rota para formar la V */
+    margin-top: 10px; /* Espacio entre el texto y la flecha */
+
+    /* CLAVE: Aplicar la animación */
+    animation: bounce 1.5s infinite ease-in-out; /* Nombre, duración, repetir, función */
+
+    /* CLAVE: Añadir transición para que el rebote sea suave */
+    transition: transform 0.4s ease-in-out, border-color 0.3s; 
+}
+
+.view-details-container:hover .view-details-arrow-icon {
+    /* CLAVE: Transforma y rebota hacia abajo 4px */
+    transform: rotate(45deg) translateY(6px) translateX(6px); 
+    border-color: var(--color-eucalyptus-green); /* Opcional: cambia de color al rebotar */
+    animation-play-state: paused; 
+}
+
+/* ========================================================
+   UBICACIÓN (Diseño de Tarjeta)
+   ======================================================== */
+.location-card.clean-design {
+    max-width: 500px;
+    margin: 0 auto;
+    background-color: white;
+    border: 1px solid #ddd;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+    border-radius: 8px;
+    overflow: hidden;
+    text-align: left;
+    margin-top: 30px;
+}
+
+.location-photo {
+    width: 100%;
+    height: 200px;
+    background-size: cover;
+    background-position: center;
+    border-bottom: 1px solid #eee;
+}
+
+.location-details {
+    padding: 20px;
+}
+
+.location-name {
+    font-family: var(--font-heading);
+    font-size: 1.6em;
+    color: var(--color-eucalyptus-green);
+    margin-bottom: 10px;
+}
+
+.location-address, .location-time {
+    font-size: 0.95em;
+    margin-bottom: 8px;
+}
+.location-address i, .location-time i {
+    color: var(--color-gold);
+    margin-right: 8px;
+}
+
+.map-buttons {
+    margin-top: 20px;
+    display: flex;
+    gap: 10px;
+}
+
+.btn-map {
+    flex-grow: 1;
+    display: block;
+    text-align: center;
+    padding: 10px;
+    border-radius: 5px;
+    text-decoration: none;
+    font-size: 0.9em;
+    font-weight: bold;
+    color: white;
+    transition: opacity 0.3s;
+}
+
+.btn-map i {
+    margin-right: 5px;
+}
+
+.waze { background-color: #0093ff; }
+.gmaps { background-color: #db4437; }
+.waze:hover, .gmaps:hover { opacity: 0.8; }
+
+.btn-map-explore {
+    width: 100%;
+    padding: 10px;
+    margin-top: 15px;
+    background-color: var(--color-soft-green);
+    border: 1px solid #ddd;
+    cursor: pointer;
+    font-weight: bold;
+    border-radius: 0 0 8px 8px;
+    font-family: var(--font-body);
+}
+
+.map-preview iframe {
+    /* Estilo para que el mapa se vea más limpio */
+    border-radius: 0 0 8px 8px !important; 
+    border-top: 1px solid #eee !important;
+}
+
+
+/* ========================================================
+   FORMULARIOS (RSVP y Deseos)
+   ======================================================== */
+.section-description {
+    max-width: 600px;
+    margin: -20px auto 30px auto;
+    font-style: italic;
+    color: #666;
+}
+
+.form-container {
+    max-width: 450px;
+    margin: 0 auto;
+    padding: 30px;
+    text-align: left;
+    border-radius: 8px;
+    border: 1px solid #eee;
+}
+
+.form-container label {
+    display: block;
+    margin-top: 15px;
+    margin-bottom: 5px;
+    font-weight: bold;
+    color: var(--color-dark);
+}
+
+.form-container input[type="text"], 
+.form-container select, 
+.form-container textarea {
+    width: 100%;
+    padding: 10px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+    font-size: 1em;
+    font-family: var(--font-body);
+}
+
+.btn-submit {
+    display: block;
+    width: 100%;
+    padding: 12px 25px;
+    margin-top: 30px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+    text-decoration: none;
+    transition: background-color 0.3s;
+    background-color: var(--color-eucalyptus-green);
+    color: white;
+    font-family: var(--font-body);
+    font-size: 1.1em;
+}
+
+.btn-submit.secondary {
+    background-color: var(--color-gold);
+}
+
+/* ========================================================
+   PREGUNTAS Y RESPUESTAS (Q&A) - Diseño Limpio
+   ======================================================== */
+.section-title-qa {
+    font-family: var(--font-heading);
+    font-size: 3em;
+    letter-spacing: 5px;
+    color: var(--color-dark); /* Color más oscuro para destacar */
+}
+
+.section-description-qa {
+    max-width: 700px;
+    margin: -20px auto 40px auto;
+    font-size: 0.95em;
+}
+
+.faq-container.clean-design {
+    max-width: 700px;
+    margin: 0 auto;
+    text-align: left;
+}
+
+.faq-question {
+    width: 100%;
+    background-color: var(--color-light);
+    color: var(--color-dark);
+    padding: 15px 20px;
+    border: none;
+    border-bottom: 1px solid #ddd;
+    text-align: left;
+    font-size: 1.1em;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    font-weight: 500;
+}
+.faq-item:first-child .faq-question {
+    border-top: 1px solid #ddd;
+}
+
+.faq-answer {
+    padding: 0 20px;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.4s ease-in-out, padding 0.4s ease-in-out;
+    background-color: var(--color-light);
+    border-left: 1px solid #ddd;
+    border-right: 1px solid #ddd;
+}
+.faq-answer.open {
+    max-height: 200px; 
+    padding: 15px 20px;
+    border-bottom: 1px solid #ddd;
+}
+
+
+@keyframes bounce {
+    0%, 100% {
+        /* Posición inicial y final: la que has descubierto */
+        transform: rotate(45deg) translateY(6px) translateX(6px);
+    }
+    50% {
+        /* Posición intermedia: baja un poco más */
+        transform: rotate(45deg) translateY(12px) translateX(12px);
+    border-color: var(--color-eucalyptus-green); /* Opcional: cambia de color al rebotar */
+
+    }
+}
+
+/* ========================================================
+   MEDIA QUERIES (VISTA MÓVIL)
+   ======================================================== */
+@media (max-width: 900px) {
+
+    html, body {
+        overflow-y: visible; /* Permite el scroll general en móvil */
+    }
+
+    #app-container {
+        flex-direction: column; /* Apilar las secciones */
+        height: auto; /* Altura automática para el scroll infinito */
+    }
+
+    /* PANEL IZQUIERDO: SE MANTIENE ARRIBA */
+    .side-image-container {
+        width: 100%;
+        position: relative; /* Ya no es sticky */
+        height: 100vh; /* Altura fija en móvil para la imagen principal */
+    }
+
+    .hero-text {
+        bottom: 20px;
+        left: 5%;
+    }
+
+    .hero-text h1 {
+        font-size: 3em;
+    }
+
+    /* PANEL DERECHO: CONTENIDO SE DESPLAZA NORMALMENTE */
+    .content-panel {
+        width: 100%;
+        overflow-y: visible; /* Scroll normal */
+        padding-top: 0;
+    }
+
+    /* Navegación (Hamburguesa) */
+    .menu-toggle {
+        display: block; /* Mostrar el botón de menú */
+        background-color: rgba(0, 0, 0, 0.4);
+        padding: 8px;
+        border-radius: 5px;
+    }
+    
+    .mobile-menu {
+        padding-top: 20px;
+        height: 100%;
+        position: fixed;
+    }
+
+    /* Estilos de Contenido */
+    .content-section {
+        padding: 40px 8%;
+    }
+    
+    .content-section h2 {
+        font-size: 2em;
+    }
+
+    .location-card.clean-design {
+        max-width: 100%;
+    }
+}

@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Luis & Michelle | ¡Nos Casamos!</title>
+    <link rel="stylesheet" href="styles.css">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Lora:ital,wght@0,400..700;1,400..700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+
+<body>
+
+    <div id="app-container">
+
+        <div class="side-image-container">
+            <button class="menu-toggle" aria-label="Abrir Menú">
+                <div class="bar"></div>
+                <div class="bar"></div>
+                <div class="bar"></div>
+            </button>
+
+            <div id="image-carousel" class="image-carousel">
+                <div class="carousel-slide active" style="background-image: url('/img/carrucel/01.jpg');"></div>
+                <div class="carousel-slide" style="background-image: url('/img/carrucel/02.jpg');"></div>
+                <div class="carousel-slide" style="background-image: url('/img/carrucel/03.jpg');"></div>
+            </div>
+
+            <div class="hero-text">
+                <h1>Luis & Michelle</h1>
+                <p>Estamos deseando compartir nuestro día especial contigo. Ayúdanos a inmortalizar nuestra boda con
+                    alegría.</p>
+            </div>
+        </div>
+
+        <div class="content-panel">
+
+            <nav id="mobile-menu" class="mobile-menu">
+                <a href="#hero-content">Inicio</a>
+                <a href="#invitacion">Invitación</a>
+                <a href="#ubicacion">Ubicación</a>
+                <a href="#rsvp">Asistencia</a>
+                <a href="#deseos">Deseos</a>
+                <a href="#faq">Q&A</a>
+                <a href="#compartir">Galería</a>
+            </nav>
+
+            <section id="hero-content" class="content-section hero-content-right">
+                <div class="eucalyptus-wreath">
+                    <p class="date-large">Sabado</p>
+                    <p class="date-large">29 de Noviembre, 2025</p>
+                    <p class="place-large">San Francisco Chinameca</p>
+                </div>
+
+                <a href="#invitacion" class="view-details-container">
+                    <span class="view-details-text">Ver Detalles</span>
+                    <span class="view-details-arrow-icon"></span>
+                </a>
+            </section>
+
+            <section id="invitacion" class="content-section">
+                <h2>Nuestras Palabras</h2>
+                <p class="text-invitacion">
+                    Con el corazón lleno de alegría, queremos invitarlos a ser testigos del inicio de nuestra vida
+                    juntos.
+                    Su presencia es el mejor regalo. ¡No podemos esperar a compartir este día tan especial con ustedes!
+                    Gracias por todo el apoyo y amor que nos han brindado.
+                </p>
+            </section>
+
+            <section id="ubicacion" class="content-section light-bg">
+                <h2>Ceremonia y Recepción</h2>
+                <div class="location-card clean-design">
+                    <div class="location-photo" style="background-image: url('placeholder_lago.jpg');"></div>
+
+                    <div class="location-details">
+                        <p class="location-name">Salón San Francisco Chinameca</p>
+                        <p class="location-address"><i class="fas fa-map-marker-alt"></i> 15 Calle Poniente #234, San
+                            Salvador</p>
+                        <p class="location-time"><i class="far fa-clock"></i> 5:00 P.M. (Puntual)</p>
+
+                        <div class="map-buttons">
+                            <a href="https://waze.com/ul?ll=13.6700,-89.2800&navigate=yes" target="_blank"
+                                class="btn-map waze"><i class="fab fa-waze"></i> Waze</a>
+                            <a href="https://www.google.com/maps/dir/?api=1&destination=13.6700,-89.2800"
+                                target="_blank" class="btn-map gmaps"><i class="fas fa-map"></i> Google Maps</a>
+                        </div>
+                    </div>
+
+                    <div class="map-preview">
+                        <button class="btn-map-explore">Explorar en Mapa</button>
+                        <iframe
+                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15510.6402360567!2d-89.2845!3d13.6740!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMTPCsDQwJzE2LjgiTiA4OcKwMTYnNDQuNCJX!5e0!3m2!1ses!2ssv!4v1633544000000"
+                            width="100%" height="300" style="border:0; display: none;" allowfullscreen=""
+                            loading="lazy">
+                        </iframe>
+                    </div>
+                </div>
+            </section>
+
+            <section id="rsvp" class="content-section">
+                <h2>Confirma Tu Asistencia</h2>
+                <p class="section-description">Por favor, confírmanos tu presencia antes del **15 de Octubre** para
+                    asegurar tu lugar. </p>
+
+                <form class="form-container">
+                    <label for="nombre_rsvp">Nombre Completo:</label>
+                    <input type="text" id="nombre_rsvp" name="nombre_rsvp" required>
+
+                    <label for="acompanante">¿Llevarás acompañante?</label>
+                    <select id="acompanante" name="acompanante">
+                        <option value="no">No</option>
+                        <option value="uno">Sí, 1 persona</option>
+                        <option value="dos">Sí, 2 personas</option>
+                    </select>
+
+                    <label for="comentarios_rsvp">Comentarios / Dietas Especiales:</label>
+                    <textarea id="comentarios_rsvp" name="comentarios_rsvp" rows="4"></textarea>
+
+                    <button type="submit" class="btn-submit">¡Confirmar Asistencia!</button>
+                </form>
+            </section>
+
+            <section id="faq" class="content-section light-bg">
+                <h2 class="section-title-qa">Q & A</h2>
+                <p class="section-description-qa">Para todos nuestros amigos y familiares que tienen muchas preguntas,
+                    ¡revisen nuestro Q & A primero!</p>
+
+                <div class="faq-container clean-design">
+                    <div class="faq-item">
+                        <button class="faq-question">¿Cuál es el código de vestimenta?</button>
+                        <div class="faq-answer">
+                            <p>Formal o de cóctel. Les pedimos evitar el color blanco y agradeceríamos tonos tierra o
+                                verdes para ir con el tema.</p>
+                        </div>
+                    </div>
+                    <div class="faq-item">
+                        <button class="faq-question">¿Se permite llevar niños?</button>
+                        <div class="faq-answer">
+                            <p>Aunque amamos a los pequeños, la recepción será un evento solo para adultos. Por favor,
+                                revisen su invitación para confirmación de la lista de invitados.</p>
+                        </div>
+                    </div>
+                    <div class="faq-item">
+                        <button class="faq-question">¿Dónde está la lista de regalos?</button>
+                        <div class="faq-answer">
+                            <p>Su presencia es el mejor regalo. Si desean obsequiarnos algo, encontrarán un enlace a
+                                nuestra mesa de regalos de Amazon al final de la página o pueden contribuir a nuestro
+                                fondo de luna de miel.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="deseos" class="content-section">
+                <h2>Déjanos tus Deseos</h2>
+                <p class="section-description">Queremos leer sus mensajes y buenos deseos para nuestro futuro juntos.
+                </p>
+                <form class="form-container">
+                    <label for="nombre_deseos">Tu Nombre (Opcional):</label>
+                    <input type="text" id="nombre_deseos" name="nombre_deseos">
+
+                    <label for="mensaje_deseos">Escribe tus deseos para nosotros:</label>
+                    <textarea id="mensaje_deseos" name="mensaje_deseos" rows="6" required></textarea>
+
+                    <button type="submit" class="btn-submit secondary">Enviar Deseos</button>
+                </form>
+            </section>
+
+            <section id="compartir" class="content-section final-call light-bg">
+                <h2>Comparte Tus Recuerdos</h2>
+                <p>¡Ayúdanos a recordar cada momento! Sube las fotos que tomes durante la celebración a nuestra galería
+                    compartida.</p>
+                <a href="https://photos.app.goo.gl/TUENLACEAQUI" target="_blank" class="btn-gallery">
+                    <i class="fas fa-camera"></i> Subir Fotos Aquí
+                </a>
+            </section>
+
+            <footer>
+                <p>© 2025 Luis & Michelle | Con Amor</p>
+            </footer>
+
+        </div>
+    </div>
+    <script src="scripts.js"></script>
+</body>
+
+</html>
