@@ -7,6 +7,7 @@
     --color-light: #fff;
     --font-heading: 'Playfair Display', serif;
     --font-body: 'Lora', serif;
+    --color-gold-accent: #B8A682; 
 }
 
 * {
@@ -92,6 +93,8 @@ html, body {
     overflow-y: auto; /* PERMITE EL SCROLL SOLO EN ESTA SECCIÓN */
     padding-top: 0; /* Ya no es necesario el padding top */
     z-index: 10;
+    /* FIX: Habilita la animación suave en el contenedor de scroll */
+    scroll-behavior: smooth; 
 }
 
 /* ========================================================
@@ -276,6 +279,7 @@ html, body {
     animation-play-state: paused; 
 }
 
+
 /* ========================================================
    UBICACIÓN (Diseño de Tarjeta)
    ======================================================== */
@@ -325,6 +329,7 @@ html, body {
     gap: 10px;
 }
 
+/* Base de los botones de mapa */
 .btn-map {
     flex-grow: 1;
     display: block;
@@ -335,27 +340,65 @@ html, body {
     font-size: 0.9em;
     font-weight: bold;
     color: white;
-    transition: opacity 0.3s;
+    transition: background-color 0.3s, color 0.3s, border-color 0.3s; /* Transiciones mejoradas */
+    border: 1px solid; /* Añadir borde base */
 }
 
+/* Los íconos en los botones (si no quieres que sean blancos) */
 .btn-map i {
+    color: white; /* Por defecto blanco en el fondo oscuro */
     margin-right: 5px;
 }
 
-.waze { background-color: #0093ff; }
-.gmaps { background-color: #db4437; }
-.waze:hover, .gmaps:hover { opacity: 0.8; }
+/* Estilos ELEGANTES para Waze y Google Maps */
+.waze, .gmaps { 
+    background-color: var(--color-eucalyptus-green); 
+    border-color: var(--color-eucalyptus-green);
+}
 
+/* Efecto Hover: Usar el color secundario (gold) */
+.waze:hover, .gmaps:hover { 
+    background-color: var(--color-gold);
+    color: white;
+    border-color: var(--color-gold);
+}
+
+.waze:hover i, .gmaps:hover i {
+    color: white;
+}
+
+/* Mejorando el botón "Explorar en Mapa" */
 .btn-map-explore {
     width: 100%;
     padding: 10px;
     margin-top: 15px;
-    background-color: var(--color-soft-green);
-    border: 1px solid #ddd;
+    
+    /* CAMBIO CLAVE: Darle un fondo sólido para mayor presencia */
+    background-color: var(--color-soft-green); 
+    
+    /* El texto debe tener buen contraste con el fondo suave */
+    color: var(--color-eucalyptus-green); 
+    
+    /* Borde más firme, usando el color principal */
+    border: 1px solid var(--color-eucalyptus-green); 
+    
     cursor: pointer;
     font-weight: bold;
     border-radius: 0 0 8px 8px;
     font-family: var(--font-body);
+    transition: background-color 0.3s, color 0.3s;
+}
+
+/* Efecto Hover: Invertir los colores para un contraste elegante */
+.btn-map-explore:hover {
+    /* Fondo se vuelve el color principal fuerte */
+    background-color: var(--color-eucalyptus-green); 
+    
+    /* El texto se vuelve blanco para un contraste máximo */
+    color: white; 
+    
+    /* Puedes añadir una sombra sutil para un efecto "elevado" */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .map-preview iframe {
@@ -364,9 +407,8 @@ html, body {
     border-top: 1px solid #eee !important;
 }
 
-
 /* ========================================================
-   FORMULARIOS (RSVP y Deseos)
+   FORMULARIOS (RSVP y Deseos) - AJUSTADO PARA BOTONES ELEGANTES
    ======================================================== */
 .section-description {
     max-width: 600px;
@@ -382,6 +424,19 @@ html, body {
     text-align: left;
     border-radius: 8px;
     border: 1px solid #eee;
+}
+.form-guest-name {
+    margin-top: 5px;
+    margin-bottom: 5px;
+    font-size: 1.1em;
+    color: var(--color-dark);
+}
+
+.guest-name-highlight {
+    font-family: var(--font-heading);
+    font-size: 1.1em;
+    color: var(--color-eucalyptus-green);
+    font-weight: bold;
 }
 
 .form-container label {
@@ -403,27 +458,45 @@ html, body {
     font-family: var(--font-body);
 }
 
+/* *** CLASES DE BOTONES DE FORMULARIO RE-ESTILIZADAS *** */
 .btn-submit {
     display: block;
     width: 100%;
     padding: 12px 25px;
     margin-top: 30px;
-    border: none;
+    border: 1px solid var(--color-eucalyptus-green); /* Se añade un borde */
     border-radius: 5px;
     cursor: pointer;
     font-weight: bold;
     text-decoration: none;
-    transition: background-color 0.3s;
-    background-color: var(--color-eucalyptus-green);
-    color: white;
+    transition: background-color 0.3s, color 0.3s, border-color 0.3s;
     font-family: var(--font-body);
     font-size: 1.1em;
+
+    /* Estilo Primario: Fondo Eucalipto, Texto Blanco */
+    background-color: var(--color-eucalyptus-green);
+    color: white;
 }
 
+.btn-submit:hover {
+    /* Efecto Hover Unificado: Fondo Dorado, Borde Dorado, Texto Eucalipto */
+    background-color: var(--color-gold);
+    border-color: var(--color-gold);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* El botón secundario (Enviar Deseos) usa el color dorado como fondo base */
 .btn-submit.secondary {
     background-color: var(--color-gold);
+    color: white;
+    border-color: var(--color-gold); 
 }
 
+.btn-submit.secondary:hover {
+    /* Invertir el hover para el secundario */
+    background-color: var(--color-eucalyptus-green);
+    border-color: var(--color-eucalyptus-green);
+}
 /* ========================================================
    PREGUNTAS Y RESPUESTAS (Q&A) - Diseño Limpio
    ======================================================== */
@@ -478,6 +551,124 @@ html, body {
     border-bottom: 1px solid #ddd;
 }
 
+/* ========================================================
+   COUNTDOWN - Diseño Bohemio con Tarjetas
+   ======================================================== */
+
+.countdown-section {
+    background-color: var(--color-soft-green); 
+    padding: 60px 10%; 
+    text-align: center;
+}
+
+.countdown-section h2 {
+    font-family: var(--font-heading);
+    font-size: 2.5em;
+    margin-bottom: 40px; 
+    color: var(--color-eucalyptus-green); 
+}
+
+.countdown-timer {
+    display: flex;
+    justify-content: center;
+    gap: 15px; /* Reducimos el espacio un poco */
+    max-width: 800px;
+    margin: 0 auto;
+    flex-wrap: wrap; /* Importante para que salten a la siguiente línea si no caben */
+}
+
+/* Estilo de la "Tarjeta" Individual (Responsive) */
+.countdown-timer span {
+    display: flex;
+    flex-direction: column; 
+    align-items: center;
+    justify-content: center;
+    
+    /* CLAVE: Usamos flex-basis para que cada caja ocupe el 25% menos el espacio entre ellas */
+    /* Calcula: (100% - 3*gap) / 4 */
+    flex-basis: calc(25% - 11.25px); 
+    
+    /* Hacemos la altura flexible para que se adapte al contenido */
+    height: 120px; 
+    padding: 15px 5px; 
+    
+    background-color: var(--color-light); 
+    border: 1px solid rgba(130, 168, 147, 0.3); 
+    border-radius: 8px; 
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05); 
+    
+    font-size: 0; 
+    overflow: hidden; 
+}
+
+/* Estilo del NÚMERO (El valor del tiempo) */
+.countdown-timer span::before {
+    content: attr(data-time-value); 
+    font-family: var(--font-heading);
+    font-size: 3em; 
+    color: var(--color-gold-accent); 
+    line-height: 1;
+    margin-bottom: 5px;
+    
+    /* CLAVE: Transición de Opacidad */
+    transition: opacity 0.5s ease-in-out; /* 0.5 segundos es un buen valor suave */
+    
+    /* Agregamos una posición relativa para evitar que el cambio mueva el layout */
+    position: relative; 
+}
+
+/* Estilo de la ETIQUETA (Días, Hrs, etc.) */
+.countdown-timer span {
+    font-family: var(--font-body);
+    font-size: 0.8em; /* Letra pequeña */
+    color: #888; /* Gris suave */
+    text-transform: uppercase;
+}
+
+/* ========================================================
+   COMPARTIR FOTOS (Galería)
+   ======================================================== */
+.btn-gallery {
+    /* Estilos base: Similares a .btn-map */
+    display: inline-block;
+    padding: 12px 25px;
+    margin-top: 20px;
+    border-radius: 5px;
+    text-decoration: none;
+    font-size: 1.1em;
+    font-weight: bold;
+    cursor: pointer;
+    
+    /* Estilo Primario (Eucalipto) */
+    background-color: var(--color-eucalyptus-green);
+    color: white;
+    border: 1px solid var(--color-eucalyptus-green);
+    transition: background-color 0.3s, color 0.3s, border-color 0.3s;
+}
+
+.btn-gallery i {
+    margin-right: 8px; /* Espacio para el ícono de la cámara */
+    color: white;
+}
+
+.btn-gallery:hover {
+    /* Efecto Hover Unificado (Dorado) */
+    background-color: var(--color-gold);
+    border-color: var(--color-gold);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* ========================================================
+   FOOTER
+   ======================================================== */
+footer {
+    padding: 20px 10%; /* Mantener el padding de las secciones */
+    text-align: center; /* CLAVE: Centra el texto */
+    font-size: 0.9em;
+    color: #888;
+    background-color: var(--color-light); /* Fondo blanco */
+    border-top: 1px solid #f0f0f0;
+}
 
 @keyframes bounce {
     0%, 100% {
@@ -556,3 +747,25 @@ html, body {
         max-width: 100%;
     }
 }
+
+/* Media Query para Teléfonos Móviles (Ancho < 600px) */
+/*@media (max-width: 600px) {
+/*    .countdown-timer {
+/*        gap: 10px; /* Reducimos el espacio aún más en móvil */
+/*    }
+/*
+/*    .countdown-timer span {
+/*        /* CLAVE: Dos columnas en móvil. Ocupan el 50% menos el espacio central */
+/*        /* Calcula: (100% - 1*gap) / 2 */
+/*        flex-basis: calc(50% - 5px); 
+/*        height: 100px; /* Reducimos el alto en móvil */
+/*    }
+/*
+/*    .countdown-timer span::before {
+/*        font-size: 2.5em; /* Reducimos el número en móvil */
+/*    }
+/*
+/*    .countdown-section h2 {
+/*        font-size: 1.8em;
+/*    }
+/*} */

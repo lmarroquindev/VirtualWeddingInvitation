@@ -1,47 +1,131 @@
-// ========================================================
-// Vue App principal (vue-app.js)
-// ========================================================
-
-// Importa funciones del objeto Vue global
 const { createApp, ref, onMounted } = Vue;
-
-// Crea la aplicación Vue y la monta sobre #app-container
+import { countdown, startCountdown } from './countdown.js';
+import { Evento, Link, PreguntaRespuesta, Deseo } from './models.js';
 const app = createApp({
     setup() {
-        // Estado reactivo para guardar los datos del API
-        const dataList = ref([]);
+        // ===========================
+        // ESTADOS PRINCIPALES (data)
+        // ===========================
+        const eventos = ref([]);           // Lista de eventos
+        const links = ref([]);             // Lista de links para RSVP
+        const preguntas = ref([]);         // Lista de preguntas y respuestas
+        const deseos = ref([]);            // Lista de deseos enviados (opcional)
+        const loadingEventos = ref(false); // Estado de carga de eventos
+        const loadingLinks = ref(false);   // Estado de carga de links
+        const loadingPreguntas = ref(false); // Estado de carga de preguntas
+        const error = ref(null);           // Error global si algo falla
+        // countdown se importa y es reactivo
+        // no necesitas volver a ref, Vue lo reconoce
+        const countdownState = countdown;
+        // ===========================
+        // FUNCIONES PARA CARGAR DATOS
+        // ===========================
 
-        // Función que obtiene los datos desde el endpoint
-        const fetchData = async () => {
+        // Cargar eventos
+        const fetchEventos = async () => {
+            loadingEventos.value = true;
+            error.value = null;
             try {
-                const response = await fetch('https://bodamarroquinrodriguezapi.runasp.net/api/Prueba');
+                const raw = await getEventos();
+                console.log("🚀 ~ fetchEventos ~ raw:", raw)
+                eventos.value = raw.map(e => new Evento(e));
 
-                if (!response.ok) throw new Error(`HTTPS ${response.status}`);
+                if (eventos.value.length > 0) {
+                    console.log("🚀 ~ fetchEventos ~ eventos.value:", eventos.value)
 
-                const data = await response.json();
-
-                // Mapeamos la respuesta
-                dataList.value = data.map(item => ({
-                    id: item.id,
-                    nombre: item.nombre
-                }));
-
-                console.log('✅ Datos recibidos:', dataList.value);
-            } catch (error) {
-                console.error('❌ Error al obtener datos:', error);
+                    startCountdown(eventos.value[0].fechaHoraEvento);
+                }
+            } catch (err) {
+                console.error('Error eventos:', err);
+                error.value = 'No se pudieron cargar los eventos.';
+            } finally {
+                loadingEventos.value = false;
             }
         };
 
-        // Ejecutar fetch al montar la app
+        // Cargar links
+        const fetchLinks = async () => {
+            loadingLinks.value = true;
+            error.value = null;
+            try {
+                const raw = await getLinks();
+                links.value = raw.map(l => new Link(l));
+            } catch (err) {
+                console.error('Error links:', err);
+                error.value = 'No se pudieron cargar los links.';
+            } finally {
+                loadingLinks.value = false;
+            }
+        };
+
+        // Cargar preguntas
+        const fetchPreguntas = async () => {
+            loadingPreguntas.value = true;
+            error.value = null;
+            try {
+                const raw = await getPreguntas();
+                preguntas.value = raw.map(p => new PreguntaRespuesta(p));
+            } catch (err) {
+                console.error('Error preguntas:', err);
+                error.value = 'No se pudieron cargar las preguntas.';
+            } finally {
+                loadingPreguntas.value = false;
+            }
+        };
+
+        // ===========================
+        // FUNCIONES DE ACCIÓN
+        // ===========================
+
+        // Confirmar asistencia de un link
+        const confirmarAsistencia = async (idLink) => {
+            try {
+                const updated = await confirmarReserva(idLink);
+                const index = links.value.findIndex(l => l.id === idLink);
+                if (index !== -1) links.value[index] = new Link(updated);
+            } catch (err) {
+                console.error('Error confirmar asistencia:', err);
+            }
+        };
+
+        // Enviar un nuevo deseo
+        const enviarDeseo = async (comentario, idLink, idEvento) => {
+            try {
+                const nuevoDeseo = new Deseo({ comentario, idLink, idEvento });
+                const saved = await postDeseo(nuevoDeseo);
+                deseos.value.push(new Deseo(saved)); // Guardamos localmente
+                console.log('Deseo guardado:', saved);
+            } catch (err) {
+                console.error('Error enviar deseo:', err);
+            }
+        };
+
+        // ===========================
+        // CICLO DE VIDA
+        // ===========================
         onMounted(() => {
-            console.log('🚀 App Vue montada, solicitando datos...');
-            fetchData();
+            fetchEventos();
+            fetchLinks();
+            fetchPreguntas();
         });
 
-        // Retorna el estado (por ahora solo dataList)
-        return { dataList };
+        // ===========================
+        // RETORNO A TEMPLATE
+        // ===========================
+        return {
+            eventos,
+            countdownState,
+            links,
+            preguntas,
+            deseos,
+            loadingEventos,
+            loadingLinks,
+            loadingPreguntas,
+            error,
+            confirmarAsistencia,
+            enviarDeseo
+        };
     }
 });
 
-// Montar Vue sobre el contenedor principal
 app.mount('#app-container');
