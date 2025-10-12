@@ -14,9 +14,9 @@ const app = createApp({
         // Función que obtiene los datos desde el endpoint
         const fetchData = async () => {
             try {
-                const response = await fetch('http://bodamarroquinrodriguezapi.runasp.net/api/Prueba');
+                const response = await fetch('https://bodamarroquinrodriguezapi.runasp.net/api/Prueba');
 
-                if (!response.ok) throw new Error(`HTTP ${response.status}`);
+                if (!response.ok) throw new Error(`HTTPS ${response.status}`);
 
                 const data = await response.json();
 
