@@ -112,36 +112,54 @@
                 </div>
             </section>
 
-            <section id="rsvp" class="content-section">
+            <section v-if="link && link?.mostrarConfirmarInvitacion" id="rsvp" class="content-section">
                 <h2>Confirma Tu Asistencia</h2>
-                <p class="section-description">Por favor, confírmanos tu presencia antes del **15 de Octubre** para
-                    asegurar tu lugar. </p>
+                <p class="section-description">
+                    Por favor, confírmanos tu presencia antes del <strong>15 de Noviembre</strong> para asegurar tu
+                    lugar.
+                </p>
 
                 <form class="form-container">
-                    <p class="form-guest-name">Estimado(a) <span class="guest-name-highlight">Juan Pérez</span>:</p>
+                    <!-- Invitado 1 -->
+                    <p class="form-guest-name">
+                        Estimado(a) <span class="guest-name-highlight">{{ link?.invitado1 }}</span>:
+                    </p>
 
                     <label for="asistencia_invitado1">¿Podrás acompañarnos en nuestro gran día?</label>
-                    <select id="asistencia_invitado1" name="asistencia_invitado1" required>
-                        <option value="" disabled selected>Selecciona una opción</option>
+                    <select id="asistencia_invitado1" v-model="asistenciaInvitado1"
+                        :disabled="link?.confirmacionAsistenciaEnviada" required>
+                        <option value="" disabled>Selecciona una opción</option>
                         <option value="si">¡Sí, con gusto!</option>
                         <option value="no">Lo sentimos, no podré asistir.</option>
                     </select>
 
-                    <p class="form-guest-name" style="margin-top: 20px;">Estimado(a) <span
-                            class="guest-name-highlight">María López</span>:</p>
+                    <!-- Invitado 2 (solo si existe) -->
+                    <template v-if="link?.invitado2 && link?.invitado2.trim() !== ''">
+                        <p class="form-guest-name" style="margin-top: 20px;">
+                            Estimado(a) <span class="guest-name-highlight">{{ link?.invitado2 }}</span>:
+                        </p>
 
-                    <label for="asistencia_invitado2">¿Podrás acompañarnos en nuestro gran día?</label>
-                    <select id="asistencia_invitado2" name="asistencia_invitado2">
-                        <option value="" disabled selected>Selecciona una opción</option>
-                        <option value="si">¡Sí, con gusto!</option>
-                        <option value="no">Lo sentimos, no podré asistir.</option>
-                    </select>
+                        <label for="asistencia_invitado2">¿Podrás acompañarnos en nuestro gran día?</label>
+                        <select id="asistencia_invitado2" v-model="asistenciaInvitado2"
+                            :disabled="link?.confirmacionAsistenciaEnviada" required>
+                            <option value="" disabled>Selecciona una opción</option>
+                            <option value="si">¡Sí, con gusto!</option>
+                            <option value="no">Lo sentimos, no podré asistir.</option>
+                        </select>
+                    </template>
 
+                    <!-- Comentario -->
                     <label for="comentarios_rsvp">Comentarios y/o Dietas Especiales:</label>
-                    <textarea id="comentarios_rsvp" name="comentarios_rsvp" rows="4"
-                        placeholder="Ej: Soy vegetariano/a."></textarea>
+                    <textarea id="comentarios_rsvp" v-model="comentario" rows="4" placeholder="Ej: Soy vegetariano/a."
+                        :disabled="link?.confirmacionAsistenciaEnviada"></textarea>
 
-                    <button type="submit" class="btn-submit">¡Enviar Confirmación!</button>
+                    <!-- Botón o mensaje -->
+                    <div v-if="link?.confirmacionAsistenciaEnviada" class="mensaje-confirmacion">
+                        ¡Gracias! Hemos recibido tu respuesta.
+                    </div>
+                    <button v-else type="button" class="btn-submit" @click.prevent="handlerEnviarConfirmacion">
+                        ¡Enviar Confirmación!
+                    </button>
                 </form>
             </section>
 
@@ -195,7 +213,8 @@
                 <h2>Comparte Tus Recuerdos</h2>
                 <p>¡Ayúdanos a recordar cada momento! Sube las fotos que tomes durante la celebración a nuestra galería
                     compartida.</p>
-                <a href="https://photos.app.goo.gl/TUENLACEAQUI" target="_blank" class="btn-gallery">
+                <!-- <a href="https://photos.app.goo.gl/TUENLACEAQUI" target="_blank" class="btn-gallery"> -->
+                <a href="#" target="_blank" class="btn-gallery">
                     <i class="fas fa-camera"></i> Subir Fotos Aquí
                 </a>
             </section>
@@ -208,7 +227,7 @@
     </div>
     <script src="./js/scripts.js"></script>
     <script src="./js/apiConfig.js"></script>
-    <script src="./js/models.js"></script>
+    <script type="module" src="./js/models.js"></script>
     <script src="./js/apiService.js"></script>
     <script type="module" src="./js/vue-app.js"></script>
 

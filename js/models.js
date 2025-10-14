@@ -18,7 +18,9 @@ class Link {
         invitado1 = "",
         invitado2 = "",
         mostrarSeccionDeseos = false,
-        asistenciaConfirmada = false,
+        confirmacionAsistenciaEnviada = false,
+        asistencia1Confirmada = false,
+        asistencia2Confirmada = false,
         fechaCreacion = "",
         fechaConfirmacion = null,
         comentario = "",
@@ -30,7 +32,9 @@ class Link {
         this.invitado1 = invitado1;
         this.invitado2 = invitado2;
         this.mostrarSeccionDeseos = mostrarSeccionDeseos;
-        this.asistenciaConfirmada = asistenciaConfirmada;
+        this.confirmacionAsistenciaEnviada = confirmacionAsistenciaEnviada
+        this.asistencia1Confirmada = asistencia1Confirmada;
+        this.asistencia2Confirmada = asistencia2Confirmada;
         this.fechaCreacion = fechaCreacion;
         this.fechaConfirmacion = fechaConfirmacion;
         this.comentario = comentario;

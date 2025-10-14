@@ -497,6 +497,21 @@ html, body {
     background-color: var(--color-eucalyptus-green);
     border-color: var(--color-eucalyptus-green);
 }
+
+.mensaje-confirmacion {
+    width: 100%;
+    padding: 15px;
+    margin-top: 30px;
+    border-radius: 5px;
+    background-color: var(--color-soft-green); /* Fondo suave */
+    color: var(--color-eucalyptus-green);     /* Texto principal */
+    font-weight: bold;
+    text-align: center;
+    font-size: 1.1em;
+    border: 1px solid var(--color-eucalyptus-green);
+}
+
+
 /* ========================================================
    PREGUNTAS Y RESPUESTAS (Q&A) - Diseño Limpio
    ======================================================== */

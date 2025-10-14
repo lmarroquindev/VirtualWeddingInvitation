@@ -8,8 +8,8 @@ async function getEventos() {
     return res.json();
 }
 
-async function getLinks() {
-    const res = await fetch(`${API_BASE_URL}/link`);
+async function getLinks(idLink) {
+    const res = await fetch(`${API_BASE_URL}/link/${idLink}`);
     if (!res.ok) throw new Error(`HTTP ${res.status}`);
     return res.json();
 }
@@ -24,11 +24,16 @@ async function updateLink(idLink, data) {
     return res.json();
 }
 
-async function confirmarReserva(idLink) {
+async function confirmarReserva(idLink, asistencia1, asistencia2, comentario) {
     const res = await fetch(`${API_BASE_URL}/link/confirmar`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ idLink })
+        body: JSON.stringify({
+            idLink: idLink,
+            Asistencia1Confirmada: asistencia1 === "si",
+            Asistencia2Confirmada: asistencia2 === "si",
+            Comentario: comentario
+        })
     });
     if (!res.ok) throw new Error(`HTTP ${res.status}`);
     return res.json();
