@@ -9,6 +9,7 @@ const app = createApp({
         const eventos = ref([]);           // Lista de eventos
         const link = ref(null);            // Lista de links para RSVP
         const preguntas = ref([]);         // Lista de preguntas y respuestas
+        const activeIndex = ref(null);
         const deseos = ref(null);            // Lista de deseos enviados (opcional)
         const loadingEventos = ref(false); // Estado de carga de eventos
         const loadingLinks = ref(false);   // Estado de carga de links
@@ -74,8 +75,6 @@ const app = createApp({
             error.value = null;
             try {
                 const raw = await getLinks(invitationId);
-                console.log("🚀 ~ fetchLinks ~ raw:", raw)
-                // link.value = reactive(new Link(raw));
                 if (raw) {
                     link.value = new Link(raw);
                 } else {
@@ -190,6 +189,10 @@ const app = createApp({
             }
         };
 
+        function toggle(index) {
+            activeIndex.value = activeIndex.value === index ? null : index;
+        }
+
         // ===========================
         // CICLO DE VIDA
         // ===========================
@@ -218,8 +221,10 @@ const app = createApp({
             nombreDeseos,
             comentarioDeseos,
             mostrarConfirmacionDeseos,
+            activeIndex,
             handlerEnviarConfirmacion,
             handlerEnviarDeseos,
+            toggle
         };
     }
 });

@@ -551,20 +551,25 @@ html, body {
     border-top: 1px solid #ddd;
 }
 
+
 .faq-answer {
-    padding: 0 20px;
     max-height: 0;
     overflow: hidden;
-    transition: max-height 0.4s ease-in-out, padding 0.4s ease-in-out;
+    padding: 0 20px;
+    opacity: 0;
+    transition: max-height 0.4s ease, padding 0.4s ease, opacity 0.4s ease;
     background-color: var(--color-light);
     border-left: 1px solid #ddd;
     border-right: 1px solid #ddd;
 }
+
 .faq-answer.open {
-    max-height: 200px; 
+    max-height: 500px; /* suficiente para tu contenido */
     padding: 15px 20px;
+    opacity: 1;
     border-bottom: 1px solid #ddd;
 }
+
 
 /* ========================================================
    DESEOS - seccion
@@ -683,6 +688,33 @@ html, body {
     background-color: var(--color-gold);
     border-color: var(--color-gold);
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* ========================================================
+   BOTÓN GALERÍA BLOQUEADO
+   ======================================================== */
+.estilobloqueado {
+    background-color: #ccc !important; /* Fondo gris claro */
+    color: #666 !important;            /* Texto gris oscuro */
+    border-color: #999 !important;     /* Borde gris */
+    cursor: not-allowed !important;    /* Cursor prohibido */
+    pointer-events: none;              /* Impide clicks */
+    opacity: 0.7;                      /* Un poco transparente para indicar bloqueo */
+}
+
+.estilobloqueado i {
+    color: #888 !important;            /* Ícono también gris */
+}
+/* ========================================================
+   MENSAJE DE BOTÓN BLOQUEADO
+   ======================================================== */
+.btn-message {
+    font-size: 0.95em;
+    color: var(--color-gold); /* Dorado elegante */
+    margin-top: 10px;
+    text-align: center;
+    font-style: italic;
+    font-weight: bold;
 }
 
 /* ========================================================
