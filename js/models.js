@@ -24,7 +24,9 @@ class Link {
         fechaCreacion = "",
         fechaConfirmacion = null,
         comentario = "",
-        activo = true
+        activo = true,
+        dedicatoriaInvitado1 = "",
+        dedicatoriaInvitado2 = ""
     } = {}) {
         this.id = id;
         this.idEvento = idEvento;
@@ -39,6 +41,8 @@ class Link {
         this.fechaConfirmacion = fechaConfirmacion;
         this.comentario = comentario;
         this.activo = activo;
+        this.dedicatoriaInvitado1 = dedicatoriaInvitado1,
+        this.dedicatoriaInvitado2 = dedicatoriaInvitado2
     }
 }
 

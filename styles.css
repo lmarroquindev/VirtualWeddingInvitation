@@ -1,3 +1,25 @@
+/* === Fuentes personalizadas === */
+@font-face {
+    font-family: 'Darleston';
+    src: url('./resources/fonts/Darleston.otf') format('opentype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'BogueSlabLight';
+    src: url('./resources/fonts/BogueSlab-Light.otf') format('opentype');
+    font-weight: 300;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'BogueSlabLightItalic';
+    src: url('./resources/fonts/BogueSlab-LightItalic.otf') format('opentype');
+    font-weight: 300;
+    font-style: italic;
+}
+
 /* ESTILOS GLOBALES Y VARIABLES */
 :root {
     --color-eucalyptus-green: #82a893; /* Verde Salvia/Eucalipto */
@@ -8,6 +30,9 @@
     --font-heading: 'Playfair Display', serif;
     --font-body: 'Lora', serif;
     --color-gold-accent: #B8A682; 
+    /* --font-heading: 'Darleston', cursive;
+    --font-body: 'BogueSlabLight', serif;
+    --font-accent: 'BogueSlabLightItalic', serif; */
 }
 
 * {
@@ -447,7 +472,7 @@ html, body {
 
 .guest-name-highlight {
     font-family: var(--font-heading);
-    font-size: 1.1em;
+    font-size: 1.05em;
     color: var(--color-eucalyptus-green);
     font-weight: bold;
 }
@@ -483,7 +508,6 @@ html, body {
     font-style: italic;
     font-size: 0.95em;
     color: var(--color-gold);
-    margin-top: 5px;
     margin-bottom: 10px;
     display: block;
 }
