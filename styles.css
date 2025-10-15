@@ -169,7 +169,7 @@ html, body {
 
 
     /* --- CAMBIOS CLAVE PARA EL FONDO --- */
-    background-image: url('img/features/fondo1.webp'); /* Tu imagen del eucalipto */
+    background-image: url('img/features/fondo1.jpg'); /* Tu imagen del eucalipto */
     background-size: 140%; /* Usa un porcentaje para que sea grande pero deje espacio */
     background-repeat: no-repeat;
     background-position: center center;
