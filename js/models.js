@@ -53,12 +53,11 @@ class PreguntaRespuesta {
 }
 
 class Deseo {
-    constructor({ id = null, idEvento = null, idLink = null, comentario = "", fecha = "" } = {}) {
+    constructor({ id = null, idLink = null, nombre = null, comentario = ""} = {}) {
         this.id = id;
-        this.idEvento = idEvento;
         this.idLink = idLink;
+        this.nombre = nombre;
         this.comentario = comentario;
-        this.fecha = fecha;
     }
 }
 

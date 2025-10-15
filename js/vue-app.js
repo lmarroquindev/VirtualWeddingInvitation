@@ -9,7 +9,7 @@ const app = createApp({
         const eventos = ref([]);           // Lista de eventos
         const link = ref(null);            // Lista de links para RSVP
         const preguntas = ref([]);         // Lista de preguntas y respuestas
-        const deseos = ref([]);            // Lista de deseos enviados (opcional)
+        const deseos = ref(null);            // Lista de deseos enviados (opcional)
         const loadingEventos = ref(false); // Estado de carga de eventos
         const loadingLinks = ref(false);   // Estado de carga de links
         const loadingPreguntas = ref(false); // Estado de carga de preguntas
@@ -19,14 +19,23 @@ const app = createApp({
         const params = new URLSearchParams(window.location.search);
         const invitationId = params.get("i");
 
-        console.log("🎟️ Invitación actual:", invitationId);
-
         // ===========================
         // Confirmar reservacion
         // ===========================
         const asistenciaInvitado1 = ref("");
         const asistenciaInvitado2 = ref("");
         const comentario = ref("");
+
+        // ===========================
+        // Formulario deseos
+        // ===========================
+        const nombreDeseos = ref("");
+        const comentarioDeseos = ref("");
+
+        // ===========================
+        // Mostrar confirmaciones
+        // ===========================
+        const mostrarConfirmacionDeseos = ref(false);
 
         // countdown se importa y es reactivo
         // no necesitas volver a ref, Vue lo reconoce
@@ -42,7 +51,6 @@ const app = createApp({
             error.value = null;
             try {
                 const raw = await getEventos();
-                console.log("🚀 ~ fetchEventos ~ raw:", raw)
                 if (raw && Array.isArray(raw)) {
                     eventos.value = raw.map(e => new Evento(e));
                 } else {
@@ -50,8 +58,6 @@ const app = createApp({
                 }
 
                 if (eventos.value.length > 0) {
-                    console.log("🚀 ~ fetchEventos ~ eventos.value:", eventos.value)
-
                     startCountdown(eventos.value[0].fechaHoraEvento);
                 }
             } catch (err) {
@@ -81,8 +87,6 @@ const app = createApp({
                     asistenciaInvitado2.value = link.value.asistencia2Confirmada ? "si" : "no";
                     comentario.value = link.value.comentario || "";
                 }
-                
-                console.log("🚀 ~ fetchLinks ~ links:", link.value)
             } catch (err) {
                 console.error('Error links:', err);
                 error.value = 'No se pudieron cargar los links.';
@@ -117,8 +121,6 @@ const app = createApp({
         // Confirmar asistencia de un link
         const confirmarAsistencia = async () => {
             try {
-                console.log("🚀 ~ confirmarAsistencia antes ~ link.value:", link.value)
-
                 const updated = await confirmarReserva(
                     link.value.id,
                     asistenciaInvitado1.value,
@@ -127,21 +129,28 @@ const app = createApp({
                 );
                 // Actualizamos directamente el objeto reactivo
                 link.value = new Link(updated);
-                console.log("✅ Asistencia confirmada:", link.value);
-                alert("✅ ¡Gracias por confirmar tu asistencia!");
             } catch (err) {
                 console.error('Error confirmar asistencia:', err);
-                alert("❌ Ocurrió un error al confirmar tu asistencia.");
             }
         };
 
         // Enviar un nuevo deseo
-        const enviarDeseo = async (comentario, idLink, idEvento) => {
+        const enviarDeseo = async (idLink,nombre,comentario) => {
             try {
-                const nuevoDeseo = new Deseo({ comentario, idLink, idEvento });
+                const nuevoDeseo = new Deseo({ comentario, idLink, nombre });
                 const saved = await postDeseo(nuevoDeseo);
-                deseos.value.push(new Deseo(saved)); // Guardamos localmente
-                console.log('Deseo guardado:', saved);
+
+                if(saved?.id)
+                {
+                    nombreDeseos.value = '';
+                    comentarioDeseos.value = '';
+                    deseos.value = null;
+                    // deseos.value =null;
+                    mostrarConfirmacionDeseos.value = true;
+                    setTimeout(() => {
+                        mostrarConfirmacionDeseos.value = false;
+                    }, 10000);
+                }
             } catch (err) {
                 console.error('Error enviar deseo:', err);
             }
@@ -160,16 +169,24 @@ const app = createApp({
                     comentario: comentario.value
                 };
 
-                console.log("📨 Enviando confirmación:", payload);
-
                 // Llamamos a la función que guarda la asistencia
                 await confirmarAsistencia(link.value.id);
-
-                // (Opcional) muestra mensaje o marca como confirmada
-                alert("✅ ¡Gracias por confirmar tu asistencia!");
             } catch (err) {
                 console.error("Error al enviar confirmación:", err);
-                alert("❌ Ocurrió un error al confirmar tu asistencia.");
+            }
+        };
+
+        const handlerEnviarDeseos = async () => {
+            try {
+                const payload = {
+                    idLink: link.value.id,
+                    nombre: nombreDeseos.value,
+                    comentario: comentarioDeseos.value,
+                };
+                // Llamamos a la función que guarda la asistencia
+                await enviarDeseo(payload.idLink, payload.nombre, payload.comentario);
+            } catch (err) {
+                console.error("Error al enviar confirmación:", err);
             }
         };
 
@@ -198,9 +215,11 @@ const app = createApp({
             asistenciaInvitado1,
             asistenciaInvitado2,
             comentario,
+            nombreDeseos,
+            comentarioDeseos,
+            mostrarConfirmacionDeseos,
             handlerEnviarConfirmacion,
-            confirmarAsistencia,
-            enviarDeseo
+            handlerEnviarDeseos,
         };
     }
 });

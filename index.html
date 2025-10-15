@@ -38,7 +38,6 @@
             </div>
         </div>
         <div class="content-panel">
-
             <nav id="mobile-menu" class="mobile-menu">
                 <a href="#hero-content">Inicio</a>
                 <a href="#invitacion">Invitación</a>
@@ -82,7 +81,7 @@
                 </p>
             </section>
 
-            <section id="ubicacion" class="content-section light-bg">
+            <section id="ubicacion" v-if="link" class="content-section light-bg">
                 <h2>Ceremonia y Recepción</h2>
                 <div class="location-card clean-design">
                     <div class="location-photo" style="background-image: url('./img/features/restaurante.webp');"></div>
@@ -112,7 +111,7 @@
                 </div>
             </section>
 
-            <section v-if="link && link?.mostrarConfirmarInvitacion" id="rsvp" class="content-section">
+            <section id="rsvp" v-if="link && link?.mostrarConfirmarInvitacion" class="content-section">
                 <h2>Confirma Tu Asistencia</h2>
                 <p class="section-description">
                     Por favor, confírmanos tu presencia antes del <strong>15 de Noviembre</strong> para asegurar tu
@@ -153,11 +152,16 @@
                     <textarea id="comentarios_rsvp" v-model="comentario" rows="4" placeholder="Ej: Soy vegetariano/a."
                         :disabled="link?.confirmacionAsistenciaEnviada"></textarea>
 
-                    <!-- Botón o mensaje -->
-                    <div v-if="link?.confirmacionAsistenciaEnviada" class="mensaje-confirmacion">
-                        ¡Gracias! Hemos recibido tu respuesta.
-                    </div>
-                    <button v-else type="button" class="btn-submit" @click.prevent="handlerEnviarConfirmacion">
+                    <!-- Mensaje con fade -->
+                    <transition name="fade">
+                        <div v-if="link?.confirmacionAsistenciaEnviada" class="mensaje-confirmacion">
+                            ¡Gracias! Hemos recibido tu respuesta.
+                        </div>
+                    </transition>
+
+                    <!-- Botón sin animación -->
+                    <button v-if="!link?.confirmacionAsistenciaEnviada" type="button" class="btn-submit"
+                        @click.prevent="handlerEnviarConfirmacion">
                         ¡Enviar Confirmación!
                     </button>
                 </form>
@@ -194,18 +198,26 @@
                 </div>
             </section>
 
-            <section id="deseos" class="content-section">
+            <section id="deseos" v-if="link && link?.mostrarSeccionDeseos" class="content-section">
                 <h2>Déjanos tus Deseos</h2>
                 <p class="section-description">Queremos leer sus mensajes y buenos deseos para nuestro futuro juntos.
                 </p>
                 <form class="form-container">
-                    <label for="nombre_deseos">Tu Nombre (Opcional):</label>
-                    <input type="text" id="nombre_deseos" name="nombre_deseos">
+                    <label for="nombre_deseos">Tu Nombre:</label>
+                    <input type="text" id="nombre_deseos" v-model="nombreDeseos" maxlength="500" />
 
                     <label for="mensaje_deseos">Escribe tus deseos para nosotros:</label>
-                    <textarea id="mensaje_deseos" name="mensaje_deseos" rows="6" required></textarea>
+                    <textarea id="mensaje_deseos" rows="6" required maxlength="4000"
+                        v-model="comentarioDeseos"></textarea>
 
-                    <button type="submit" class="btn-submit secondary">Enviar Deseos</button>
+                    <button type="button" class="btn-submit secondary" @click.prevent="handlerEnviarDeseos">Enviar
+                        Deseos</button>
+
+                    <transition name="fade">
+                        <div v-if="mostrarConfirmacionDeseos" class="mensaje-confirmacion">
+                            ¡Gracias por tu mensaje! 💖
+                        </div>
+                    </transition>
                 </form>
             </section>
 
