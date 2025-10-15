@@ -889,6 +889,19 @@ footer {
     }
 }
 
+@media (max-width: 768px) {
+  .form-guest-name {
+    display: flex;
+    flex-direction: column; /* Coloca “Estimado(a)” arriba y el nombre debajo */
+    align-items: flex-start; /* Alinea a la izquierda (o usa center si prefieres centrado) */
+  }
+
+  .form-guest-name .guest-name-highlight {
+    display: block;
+    margin-top: 5px; /* Espacio entre Estimado(a) y el nombre */
+  }
+}
+
 /* Media Query para Teléfonos Móviles (Ancho < 600px) */
 /*@media (max-width: 600px) {
 /*    .countdown-timer {
