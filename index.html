@@ -142,9 +142,12 @@
 
                 <form class="form-container">
                     <!-- Invitado 1 -->
-                    <p class="form-guest-name">
-                        Estimado(a) <span class="guest-name-highlight">{{ link?.invitado1 }}</span>:
-                    </p>
+                    <div class="form-guest-name">
+                        Estimado(a) <span class="guest-name-highlight">{{ link?.invitado1 }}</span>
+                    </div>
+                    <div v-show="link?.dedicatoriaInvitado1" class="guest-dedication">
+                        {{ link?.dedicatoriaInvitado1 }}
+                    </div>
 
                     <label for="asistencia_invitado1">¿Podrás acompañarnos en nuestro gran día?</label>
                     <select id="asistencia_invitado1" v-model="asistenciaInvitado1"
@@ -156,10 +159,12 @@
 
                     <!-- Invitado 2 (solo si existe) -->
                     <template v-if="link?.invitado2 && link?.invitado2.trim() !== ''">
-                        <p class="form-guest-name" style="margin-top: 20px;">
-                            Estimado(a) <span class="guest-name-highlight">{{ link?.invitado2 }}</span>:
-                        </p>
-
+                        <div class="form-guest-name marginTop">
+                            Estimado(a) <span class="guest-name-highlight">{{ link?.invitado2 }}</span>
+                        </div>
+                        <div v-show="link?.dedicatoriaInvitado2" class="guest-dedication">
+                            {{ link?.dedicatoriaInvitado2 }}
+                        </div>
                         <label for="asistencia_invitado2">¿Podrás acompañarnos en nuestro gran día?</label>
                         <select id="asistencia_invitado2" v-model="asistenciaInvitado2"
                             :disabled="link?.confirmacionAsistenciaEnviada" required>
@@ -170,7 +175,7 @@
                     </template>
 
                     <!-- Comentario -->
-                    <label for="comentarios_rsvp">Comentarios y/o Dietas Especiales:</label>
+                    <label for="comentarios_rsvp" class="marginTop50">Comentarios y/o Dietas Especiales:</label>
                     <textarea id="comentarios_rsvp" v-model="comentario" rows="4" placeholder="Ej: Soy vegetariano/a."
                         :disabled="link?.confirmacionAsistenciaEnviada"></textarea>
 

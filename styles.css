@@ -425,11 +425,24 @@ html, body {
     border-radius: 8px;
     border: 1px solid #eee;
 }
-.form-guest-name {
+/* .form-guest-name {
     margin-top: 5px;
     margin-bottom: 5px;
     font-size: 1.1em;
     color: var(--color-dark);
+} */
+.form-guest-name {
+    font-size: 1.2em;
+    color: var(--color-eucalyptus-green);
+    font-weight: bold;
+    margin-bottom: 0;
+}
+
+.form-guest-name.marginTop{
+    margin-top: 20px;
+}
+.marginTop50{
+    margin-top: 45px !important;
 }
 
 .guest-name-highlight {
@@ -457,6 +470,24 @@ html, body {
     font-size: 1em;
     font-family: var(--font-body);
 }
+
+.form-guest-block {
+    margin-bottom: 25px; /* Separación entre invitados */
+    padding: 15px;
+    background-color: #f9f9f9; /* Fondo suave para resaltar */
+    border-radius: 8px;
+    border: 1px solid #eee;
+}
+
+.guest-dedication {
+    font-style: italic;
+    font-size: 0.95em;
+    color: var(--color-gold);
+    margin-top: 5px;
+    margin-bottom: 10px;
+    display: block;
+}
+
 
 /* *** CLASES DE BOTONES DE FORMULARIO RE-ESTILIZADAS *** */
 .btn-submit {
