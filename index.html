@@ -206,7 +206,7 @@
                 </form>
             </section>
 
-            <section id="faq" v-if="link && preguntas?.length > 0" class="content-section light-bg">
+            <section id="faq" v-show="link && preguntas?.length > 0" class="content-section light-bg">
                 <h2 class="section-title-qa">Q & A</h2>
                 <p class="section-description-qa">
                     Para todos nuestros amigos y familiares que tienen muchas preguntas, ¡revisen nuestro Q & A primero!
@@ -217,8 +217,7 @@
                         <div class="faq-question" @click="toggle(index)">
                             {{ item.pregunta }}
                         </div>
-                        <div class="faq-answer" :class="{ open: activeIndex === index }" v-html="item.respuesta">
-                        </div>
+                        <div class="faq-answer" :class="{ open: activeIndex === index }" v-html="item.respuesta"></div>
                     </div>
                 </div>
 

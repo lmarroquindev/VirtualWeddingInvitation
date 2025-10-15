@@ -528,48 +528,75 @@ html, body {
     font-size: 0.95em;
 }
 
+/* CONTENEDOR FAQ */
 .faq-container.clean-design {
     max-width: 700px;
     margin: 0 auto;
     text-align: left;
+    border-radius: 10px; /* suaviza bordes del acordeón */
+    overflow: hidden;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.05); /* resalta el acordeón */
 }
 
+/* PREGUNTA */
 .faq-question {
     width: 100%;
-    background-color: var(--color-light);
+    background-color: white;   /* Fondo por defecto */
     color: var(--color-dark);
-    padding: 15px 20px;
+    padding: 18px 25px;
     border: none;
-    border-bottom: 1px solid #ddd;
+    border-bottom: 1px solid #cfcfcf;
     text-align: left;
-    font-size: 1.1em;
+    font-size: 1.15em;
     cursor: pointer;
-    transition: background-color 0.3s;
-    font-weight: 500;
+    transition: background-color 0.3s, color 0.3s;
+    font-weight: 600;
+    position: relative;
 }
+
+
+/* Indicador + / - */
+.faq-question::after {
+  content: '+';
+  position: absolute;
+  right: 25px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 1.3em;
+  transition: transform 0.3s;
+}
+
+.faq-question.active::after {
+  content: '-';
+  transform: translateY(-50%) rotate(180deg);
+}
+
 .faq-item:first-child .faq-question {
     border-top: 1px solid #ddd;
 }
 
-
+/* RESPUESTA */
 .faq-answer {
     max-height: 0;
     overflow: hidden;
-    padding: 0 20px;
+    padding: 0 25px;
     opacity: 0;
-    transition: max-height 0.4s ease, padding 0.4s ease, opacity 0.4s ease;
+    transition: max-height 0.5s ease, padding 0.5s ease, opacity 0.5s ease;
     background-color: var(--color-light);
     border-left: 1px solid #ddd;
     border-right: 1px solid #ddd;
-}
-
-.faq-answer.open {
-    max-height: 500px; /* suficiente para tu contenido */
-    padding: 15px 20px;
-    opacity: 1;
     border-bottom: 1px solid #ddd;
+    margin-bottom: 10px; /* separación visual entre respuestas */
+    border-radius: 0 0 10px 10px;
 }
 
+/* Cuando la respuesta está abierta */
+.faq-answer.open {
+    max-height: 1000px; /* suficiente para la mayoría de contenido */
+    padding: 15px 25px;
+    opacity: 1;
+    background-color: #f9f9f9; /* ligera diferenciación de fondo */
+}
 
 /* ========================================================
    DESEOS - seccion

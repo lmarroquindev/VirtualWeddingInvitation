@@ -42,20 +42,25 @@ document.addEventListener('DOMContentLoaded', function() {
     // ========================================================
     // 2. ACORDEÓN (FAQ)
     // ========================================================
-    document.querySelectorAll('.faq-question').forEach(button => {
-        button.addEventListener('click', () => {
-            const answer = button.nextElementSibling;
+    // document.querySelectorAll('.faq-question').forEach(button => {
+    //     button.addEventListener('click', () => {
+    //         const answer = button.nextElementSibling;
             
-            // Cierra todas las otras respuestas
-            document.querySelectorAll('.faq-answer.open').forEach(openAnswer => {
-                if (openAnswer !== answer) {
-                    openAnswer.classList.remove('open');
-                }
-            });
+    //         // Cierra todas las otras respuestas
+    //         document.querySelectorAll('.faq-answer.open').forEach(openAnswer => {
+    //             if (openAnswer !== answer) {
+    //                 openAnswer.classList.remove('open');
+    //             }
+    //         });
 
-            // Alternar (abrir/cerrar) la respuesta actual
-            answer.classList.toggle('open');
-        });
+    //         // Alternar (abrir/cerrar) la respuesta actual
+    //         answer.classList.toggle('open');
+    //     });
+    // });
+    document.addEventListener('click', (e) => {
+        const question = e.target.closest('.faq-question');
+        if (!question) return;
+        question.classList.toggle('active');
     });
 
 
