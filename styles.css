@@ -28,11 +28,11 @@
     --color-dark: #333;
     --color-light: #fff;
     --font-heading: 'Playfair Display', serif;
-    --font-body: 'Lora', serif;
+    /* --font-body: 'Lora', serif; */
     --color-gold-accent: #B8A682; 
-    /* --font-heading: 'Darleston', cursive;
+    /* --font-heading: 'Darleston', serif; */
     --font-body: 'BogueSlabLight', serif;
-    --font-accent: 'BogueSlabLightItalic', serif; */
+    --font-accent: 'BogueSlabLightItalic', serif; 
 }
 
 * {
