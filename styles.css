@@ -1041,7 +1041,6 @@ footer {
     .location-card.clean-design,
     .faq-question,
     .faq-answer.open,
-    .btn-submit,
     .form-container {
         background-color: var(--color-light) !important;
         color: var(--color-dark) !important;
