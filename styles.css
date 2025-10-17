@@ -1026,6 +1026,30 @@ footer {
   }
 }
 
+/*Forza los estilos para el dark mode de los navegadores*/
+@media (prefers-color-scheme: dark) {
+    html, body {
+        background-color: var(--color-light) !important;
+        color: var(--color-dark) !important;
+    }
+
+    footer {
+        background-color: var(--color-light) !important;
+        color: #888 !important; /* tu color actual de footer */
+    }
+
+    .location-card.clean-design,
+    .faq-question,
+    .faq-answer.open,
+    .btn-submit,
+    .form-container {
+        background-color: var(--color-light) !important;
+        color: var(--color-dark) !important;
+        border-color: #ddd !important; /* igual que tu borde actual */
+    }
+}
+
+
 /* Media Query para Teléfonos Móviles (Ancho < 600px) */
 /*@media (max-width: 600px) {
 /*    .countdown-timer {

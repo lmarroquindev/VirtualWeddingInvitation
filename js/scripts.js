@@ -49,7 +49,6 @@ function updateIcon() {
     const musicMutedCookie = getCookie("music_muted");
     if (musicMutedCookie) {
     // Si existe la cookie, ocultamos y removemos el overlay inmediatamente
-    overlay.classList.add("hidden");
     overlay.remove()
     music.pause(); // opcional, asegurarse que no se reproduzca
     updateIcon();  // actualiza icono según estado
