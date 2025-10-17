@@ -9,32 +9,32 @@ document.addEventListener("DOMContentLoaded", function () {
   music.volume = 0.5;
   let musicStarted = false;
 
-function updateIcon() {
-  const icon = toggleBtn.querySelector("i");
+  function updateIcon() {
+    const icon = toggleBtn.querySelector("i");
 
-  // Agregamos clase temporal para animar salida
-  icon.classList.add("switching");
+    // Agregamos clase temporal para animar salida
+    icon.classList.add("switching");
 
-  // Esperamos a que termine la transición (300ms)
-  setTimeout(() => {
-    if (!music.paused) {
-      icon.classList.remove("fa-volume-mute");
-      icon.classList.add("fa-music");
-      toggleBtn.classList.add("playing");
-      toggleBtn.setAttribute("aria-pressed", "true");
-      toggleBtn.setAttribute("title", "Pausar música");
-    } else {
-      icon.classList.remove("fa-music");
-      icon.classList.add("fa-volume-mute");
-      toggleBtn.classList.remove("playing");
-      toggleBtn.setAttribute("aria-pressed", "false");
-      toggleBtn.setAttribute("title", "Reproducir música");
-    }
+    // Esperamos a que termine la transición (300ms)
+    setTimeout(() => {
+      if (!music.paused) {
+        icon.classList.remove("fa-volume-mute");
+        icon.classList.add("fa-music");
+        toggleBtn.classList.add("playing");
+        toggleBtn.setAttribute("aria-pressed", "true");
+        toggleBtn.setAttribute("title", "Pausar música");
+      } else {
+        icon.classList.remove("fa-music");
+        icon.classList.add("fa-volume-mute");
+        toggleBtn.classList.remove("playing");
+        toggleBtn.setAttribute("aria-pressed", "false");
+        toggleBtn.setAttribute("title", "Reproducir música");
+      }
 
-    // Quitamos la clase de animación para hacer fade-in
-    icon.classList.remove("switching");
-  }, 150); // La mitad de la transición CSS para sincronizar entrada y salida
-}
+      // Quitamos la clase de animación para hacer fade-in
+      icon.classList.remove("switching");
+    }, 150); // La mitad de la transición CSS para sincronizar entrada y salida
+  }
 
   function tryStartMusic() {
     if (musicStarted) return;
@@ -89,6 +89,33 @@ function updateIcon() {
     if (e.key === "Enter" || e.key === " ") {
       e.preventDefault();
       toggleBtn.click();
+    }
+  });
+
+    // Detectar si la pestaña se oculta o se vuelve visible
+  document.addEventListener("visibilitychange", () => {
+    const wasPlaying = !music.paused;
+    if (document.hidden && wasPlaying) {
+      music.pause();
+      toggleBtn.dataset.wasPlaying = "true";
+    } else if (!document.hidden && toggleBtn.dataset.wasPlaying === "true") {
+      music.play().catch(() => {});
+      delete toggleBtn.dataset.wasPlaying;
+    }
+  });
+
+  // Detectar pérdida y recuperación de foco de la ventana (móvil y escritorio)
+  window.addEventListener("blur", () => {
+    if (!music.paused) {
+      music.pause();
+      toggleBtn.dataset.wasPlaying = "true";
+    }
+  });
+
+  window.addEventListener("focus", () => {
+    if (toggleBtn.dataset.wasPlaying === "true") {
+      music.play().catch(() => {});
+      delete toggleBtn.dataset.wasPlaying;
     }
   });
 
