@@ -811,6 +811,130 @@ footer {
     border-top: 1px solid #f0f0f0;
 }
 
+/* ========================================================
+   Musica
+   ======================================================== */
+
+/* Overlay estilo elegante */
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.85);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  z-index: 9999;
+  transition: opacity 0.6s ease;
+  font-family: "Georgia", serif;
+  padding: 1.5rem;
+}
+
+.overlay.hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.overlay-content {
+  width: 100%;
+  max-width: 400px; /* controla el ancho máximo del bloque */
+  margin: 0 auto;
+  animation: fadeInUp 1.5s ease;
+}
+
+.overlay-text {
+  font-size: 1.3rem;
+  line-height: 1.6;
+  word-break: break-word;
+}
+
+
+/* Animación suave */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+
+/* === Botón de música refinado === */
+.music-toggle {
+    position: fixed;
+    bottom: 20px;
+    left: 20px; /* Web: botón a la izquierda */
+    font-size: 1.8rem;
+    color: white; /* Web: color blanco */
+    background: none;
+    border: none;
+    cursor: pointer;
+    opacity: 0.5; /* Opacidad inicial fija */
+    transition: opacity 0.4s ease, transform 0.3s ease;
+    z-index: 1000;
+}
+
+.music-toggle:hover,
+.music-toggle:focus {
+    opacity: 1; /* Hover en web: 100% */
+    transform: scale(1.05);
+}
+
+.music-toggle i {
+    pointer-events: none;
+    display: inline-block;
+    transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+/* Efecto de salida y entrada cuando cambia */
+.music-toggle i.switching {
+    opacity: 0;
+    transform: scale(0.5) rotate(-90deg);
+}
+
+/* Cuando la música está sonando */
+.music-toggle.playing {
+    animation: pulseMusic 2s infinite ease-in-out;
+}
+
+/* Animación de pulso */
+@keyframes pulseMusic {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+}
+
+/* =====================
+   Versión móvil (pantallas pequeñas)
+   ===================== */
+@media (max-width: 768px) {
+    .music-toggle {
+        left: auto;
+        right: 20px; /* En móvil: botón a la derecha */
+        color: #c6a866; /* Dorado suave */
+        opacity: 0.5; /* Inicialmente 50% */
+    }
+
+    .music-toggle:active {
+        opacity: 1; /* Al tocar: 100% */
+        transform: scale(1.05); /* Pequeña animación */
+    }
+}
+
+/* Ajuste de texto del overlay en móvil (por si lo usas) */
+@media (max-width: 600px) {
+    .overlay-text {
+        font-size: 1.1rem;
+        line-height: 1.5;
+        padding: 0 1rem;
+    }
+}
+
+
+
 @keyframes bounce {
     0%, 100% {
         /* Posición inicial y final: la que has descubierto */

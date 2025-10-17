@@ -1,6 +1,92 @@
 // ========================================================
 // ESTRUCTURA PRINCIPAL: Asegura que el DOM esté cargado
 // ========================================================
+document.addEventListener("DOMContentLoaded", function () {
+  const music = document.getElementById("bg-music");
+  const toggleBtn = document.getElementById("music-toggle");
+  const overlay = document.getElementById("intro-overlay");
+
+  music.volume = 0.5;
+  let musicStarted = false;
+
+function updateIcon() {
+  const icon = toggleBtn.querySelector("i");
+
+  // Agregamos clase temporal para animar salida
+  icon.classList.add("switching");
+
+  // Esperamos a que termine la transición (300ms)
+  setTimeout(() => {
+    if (!music.paused) {
+      icon.classList.remove("fa-volume-mute");
+      icon.classList.add("fa-music");
+      toggleBtn.classList.add("playing");
+      toggleBtn.setAttribute("aria-pressed", "true");
+      toggleBtn.setAttribute("title", "Pausar música");
+    } else {
+      icon.classList.remove("fa-music");
+      icon.classList.add("fa-volume-mute");
+      toggleBtn.classList.remove("playing");
+      toggleBtn.setAttribute("aria-pressed", "false");
+      toggleBtn.setAttribute("title", "Reproducir música");
+    }
+
+    // Quitamos la clase de animación para hacer fade-in
+    icon.classList.remove("switching");
+  }, 150); // La mitad de la transición CSS para sincronizar entrada y salida
+}
+
+  function tryStartMusic() {
+    if (musicStarted) return;
+    musicStarted = true;
+    music.play()
+      .then(() => {
+        // no hace falta updateIcon() aquí porque el evento 'play' lo actualizará
+      })
+      .catch(err => console.log("Autoplay bloqueado:", err));
+  }
+
+  // Click o tap en el overlay inicia la música y lo oculta
+  overlay.addEventListener("click", () => {
+    overlay.classList.add("hidden");
+    setTimeout(() => overlay.remove(), 600);
+    tryStartMusic();
+  });
+
+  // ESCUCHAR eventos nativos del audio para mantener el icono sincronizado
+  music.addEventListener("play", updateIcon);
+  music.addEventListener("pause", updateIcon);
+  // También en caso de que el audio acabe o se reinicie
+  music.addEventListener("ended", updateIcon);
+  music.addEventListener("volumechange", updateIcon);
+
+  // Control de música manual
+  toggleBtn.addEventListener("click", () => {
+    if (music.paused) {
+      music.play()
+        .then(() => {
+          /* El evento 'play' llamará a updateIcon */
+        })
+        .catch(err => console.log("No se pudo reproducir:", err));
+    } else {
+      music.pause();
+      // el evento 'pause' llamará a updateIcon
+    }
+  });
+
+  // Accesibilidad: permitir activar con Enter o Space
+  toggleBtn.addEventListener("keydown", (e) => {
+    if (e.key === "Enter" || e.key === " ") {
+      e.preventDefault();
+      toggleBtn.click();
+    }
+  });
+
+  // Inicializa el icono según el estado inicial del audio
+  updateIcon();
+});
+
+
 document.addEventListener('DOMContentLoaded', function() {
     // ========================================================
     // 1. SCROLL ANIMADO (Smooth Scroll) - SOLUCIÓN DEFINITIVA
@@ -138,6 +224,9 @@ document.addEventListener('DOMContentLoaded', function() {
          console.error("Error: Los IDs 'btn-map-explore' o 'map-frame' no se encontraron en el DOM.");
     }
 }); 
+
+
+
 // ========================================================
 // FIN DEL DOMContentLoaded
 // ========================================================

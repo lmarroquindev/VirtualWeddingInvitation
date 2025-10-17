@@ -34,6 +34,7 @@
 
 <body>
 
+
     <div id="app-container">
 
         <div class="side-image-container">
@@ -59,7 +60,7 @@
 
             </div>
         </div>
-        <div class="content-panel">
+        <div id="content-panel" class="content-panel">
             <nav id="mobile-menu" class="mobile-menu">
                 <a href="#hero-content">Inicio</a>
                 <a href="#invitacion">Invitación</a>
@@ -77,7 +78,7 @@
                     <p class="place-large">San Francisco Chinameca</p>
                 </div>
 
-                <a href="#countdown" class="view-details-container">
+                <a id="btnViewDetaills" href="#countdown" class="view-details-container">
                     <span class="view-details-text">Ver Detalles</span>
                     <span class="view-details-arrow-icon"></span>
                 </a>
@@ -258,6 +259,29 @@
 
         </div>
     </div>
+
+    <!-- Overlay inicial -->
+    <div id="intro-overlay" class="overlay">
+        <div class="overlay-content">
+            <p class="overlay-text">
+                🗞️ <strong>Extra, extra...</strong><br>
+                ¡El gran día está por llegar!<br>
+                Toca para descubrir nuestra historia 💍
+            </p>
+        </div>
+    </div>
+
+    <!-- Botón de música -->
+    <button id="music-toggle" class="music-toggle" aria-label="Activar/Desactivar música">
+        <i class="fas fa-music"></i>
+    </button>
+
+    <!-- Música de fondo -->
+    <audio id="bg-music" loop>
+        <source src="./resources/audio/Hasta_ese_dia-Lasso.mp3" type="audio/mpeg">
+        Tu navegador no soporta audio.
+    </audio>
+
     <script src="./js/scripts.js"></script>
     <script src="./js/apiConfig.js"></script>
     <script type="module" src="./js/models.js"></script>
