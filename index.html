@@ -201,10 +201,12 @@
                     </transition>
 
                     <!-- Botón sin animación -->
-                    <button v-if="!link?.confirmacionAsistenciaEnviada" type="button" class="btn-submit"
-                        @click.prevent="handlerEnviarConfirmacion">
-                        ¡Enviar Confirmación!
-                    </button>
+                    <div v-if="!link?.confirmacionAsistenciaEnviada" id="btn-send-confirmation" class="btn-submit"
+                        :class="{ active: loadingConfirmacion, loading: loadingConfirmacion }"
+                        data-progress-style="fill-top" @click.prevent="handlerEnviarConfirmacion">
+                        <div class="btn"> {{ loadingConfirmacion ? 'Enviando...' : '¡Enviar Confirmación!' }}</div>
+                        <div class="progress" :style="{ width: progress + '%' }"></div>
+                    </div>
                 </form>
             </section>
 
@@ -237,8 +239,12 @@
                     <textarea id="mensaje_deseos" rows="6" required maxlength="4000"
                         v-model="comentarioDeseos"></textarea>
 
-                    <button type="button" class="btn-submit secondary" @click.prevent="handlerEnviarDeseos">Enviar
-                        Deseos</button>
+                    <div id="btn-send-wishes" class="btn-submit secondary"
+                        :class="{ active: loadingDeseos, loading: loadingDeseos }" data-progress-style="fill-top"
+                        @click.prevent="handlerEnviarDeseos">
+                        <div class="btn"> {{ loadingDeseos ? 'Enviando...' : 'Enviar Deseos' }}</div>
+                        <div class="progress" :style="{ width: progressDeseos + '%' }"></div>
+                    </div>
 
                     <transition name="fade">
                         <div v-if="mostrarConfirmacionDeseos" class="mensaje-confirmacion">

@@ -223,14 +223,6 @@ html, body {
     max-width: 600px;
     margin: 0 auto 40px;
     padding: 0; /* Ya no necesita el padding extra */
-    
-    /* --- ELIMINAR PROPIEDADES DE FONDO --- */
-    /* background-image: url('fondo1.webp'); */ 
-    /* background-size: contain; */
-    /* background-repeat: no-repeat; */
-    /* background-position: center; */
-    /* -------------------------------------- */
-    
     font-style: italic;
     color: var(--color-dark);
     text-align: center; /* Asegurar que el texto esté centrado */
@@ -268,16 +260,12 @@ html, body {
 }
 
 .view-details-text {
-    /* El texto del enlace no tiene subrayado, pero tendrá un borde de color */
-    /* padding-bottom: 5px;  */
-    /* transition: border-bottom-color 0.3s; */
      transition: color 0.3s
 }
 
 .view-details-container:hover .view-details-text {
     /* Al hacer hover, el texto puede cambiar de color y el borde también */
     color: var(--color-eucalyptus-green);
-    /* border-bottom-color: var(--color-eucalyptus-green); */
 }
 
 /* Dibuja la flecha (V) separada y controlamos el rebote */
@@ -450,12 +438,7 @@ html, body {
     border-radius: 8px;
     border: 1px solid #eee;
 }
-/* .form-guest-name {
-    margin-top: 5px;
-    margin-bottom: 5px;
-    font-size: 1.1em;
-    color: var(--color-dark);
-} */
+
 .form-guest-name {
     font-size: 1.2em;
     color: var(--color-eucalyptus-green);
@@ -531,6 +514,23 @@ html, body {
     /* Estilo Primario: Fondo Eucalipto, Texto Blanco */
     background-color: var(--color-eucalyptus-green);
     color: white;
+    position: relative;
+    height: 50px;
+    transition: all 0.4s ease;
+}
+.btn-submit:not(.active) {
+	cursor: pointer;
+}
+.btn-submit .btn {
+	position: absolute;
+	left: 0;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	line-height: 50px;
+	text-align: center;
+	z-index: 10;
+	opacity: 1;
 }
 
 .btn-submit:hover {
@@ -538,6 +538,45 @@ html, body {
     background-color: var(--color-gold);
     border-color: var(--color-gold);
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* === NUEVO: estado de carga === */
+.btn-submit.loading {
+  background-color: var(--color-gold); /* igual al hover */
+  border-color: var(--color-gold);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.30);
+  cursor: wait; /* cambia cursor */
+}
+
+/* Barra de progreso */
+.btn-submit .progress {
+  /*Estilos para barra fina en el top*/
+  /* position: absolute;
+  top: 0;
+  left: 0;
+  height: 5px; */
+
+  /*Estilos para barra tamaño completo de izquierda a derecha*/
+  position: absolute;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0; /* cubre todo el botón */
+
+  /*Estilos generales*/
+  width: 0%;
+  opacity: 0;
+  background: var(--color-eucalyptus-green); /* color normal (rojo/verde si lo cambias) */
+  transition: width 0.2s ease, background-color 0.3s ease, opacity 0.3s ease;
+}
+
+.btn-submit.active .progress {
+  opacity: 1;
+}
+
+/* cuando está cargando, la barra cambia de color */
+.btn-submit.loading .progress {
+  background: #b68900; /* dorado más oscuro */
 }
 
 /* El botón secundario (Enviar Deseos) usa el color dorado como fondo base */
@@ -552,6 +591,17 @@ html, body {
     background-color: var(--color-eucalyptus-green);
     border-color: var(--color-eucalyptus-green);
 }
+
+/* === ESTADO DE CARGA para el SECUNDARIO === */
+.btn-submit.secondary.loading {
+  background-color: var(--color-eucalyptus-green);
+  border-color: var(--color-eucalyptus-green);
+}
+
+.btn-submit.secondary.loading .progress {
+  background-color: #247e53; /* verde más oscuro para distinguir la carga */
+}
+/*END: Progress Bar del boton*/
 
 .mensaje-confirmacion {
     width: 100%;
@@ -1047,26 +1097,3 @@ footer {
         border-color: #ddd !important; /* igual que tu borde actual */
     }
 }
-
-
-/* Media Query para Teléfonos Móviles (Ancho < 600px) */
-/*@media (max-width: 600px) {
-/*    .countdown-timer {
-/*        gap: 10px; /* Reducimos el espacio aún más en móvil */
-/*    }
-/*
-/*    .countdown-timer span {
-/*        /* CLAVE: Dos columnas en móvil. Ocupan el 50% menos el espacio central */
-/*        /* Calcula: (100% - 1*gap) / 2 */
-/*        flex-basis: calc(50% - 5px); 
-/*        height: 100px; /* Reducimos el alto en móvil */
-/*    }
-/*
-/*    .countdown-timer span::before {
-/*        font-size: 2.5em; /* Reducimos el número en móvil */
-/*    }
-/*
-/*    .countdown-section h2 {
-/*        font-size: 1.8em;
-/*    }
-/*} */

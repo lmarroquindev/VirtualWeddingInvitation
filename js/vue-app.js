@@ -42,6 +42,11 @@ const app = createApp({
         // no necesitas volver a ref, Vue lo reconoce
         const countdownState = countdown;
         
+        const loadingConfirmacion = ref(false);
+        const progress = ref(0);
+
+        const loadingDeseos = ref(false);
+        const progressDeseos = ref(0);
         // ===========================
         // FUNCIONES PARA CARGAR DATOS
         // ===========================
@@ -133,6 +138,39 @@ const app = createApp({
             }
         };
 
+        //Mock COnfirmar asistencia
+        // const confirmarAsistencia = async () => {
+        //     try {
+        //         console.log("Iniciando mock de confirmación de asistencia...");
+
+        //         // Simulamos una request a la base que tarda más de 10 segundos
+        //         const updated = await new Promise((resolve) => {
+        //         setTimeout(() => {
+        //             console.log("Simulación de respuesta del servidor completada (mock).");
+        //             // Datos simulados de respuesta
+        //             resolve({
+        //             id: link.value.id,
+        //             asistenciaInvitado1: asistenciaInvitado1.value,
+        //             asistenciaInvitado2: asistenciaInvitado2.value,
+        //             comentario: comentario.value,
+        //             confirmado: true,
+        //             fechaConfirmacion: new Date().toISOString()
+        //             });
+        //         }, 10500); // 10.5 segundos de retardo simulado
+        //         });
+
+        //         // Actualizamos el objeto reactivo como lo haría la request real
+        //         // link.value = new Link(updated);
+
+        //     } catch (err) {
+        //         console.error("Error confirmar asistencia (mock):", err);
+        //     }
+        //     finally{
+        //             console.log("TERMINO Simulación de respuesta del servidor completada (mock).");
+
+        //     }
+        //     };
+
         // Enviar un nuevo deseo
         const enviarDeseo = async (idLink,nombre,comentario) => {
             try {
@@ -155,27 +193,79 @@ const app = createApp({
             }
         };
 
+        //Mock enviarDeseo
+        // const enviarDeseo = async (idLink, nombre, comentario) => {
+        //     return new Promise((resolve, reject) => {
+        //         console.log('Simulando envío del deseo...');
+        //         setTimeout(() => {
+        //             // simulamos que todo salió bien
+        //             console.log('Deseo enviado correctamente.');
+                    
+        //             // limpiar campos
+        //             nombreDeseos.value = '';
+        //             comentarioDeseos.value = '';
+        //             deseos.value = null;
+        //             mostrarConfirmacionDeseos.value = true;
+
+        //             // Ocultar confirmación después de 10s
+        //             setTimeout(() => {
+        //                 mostrarConfirmacionDeseos.value = false;
+        //             }, 10000);
+
+        //             resolve({ id: 1 }); // simulamos respuesta del servidor
+        //         }, 3000); // <--- 3 segundos
+        //     });
+        // };
+
+
         // ===========================
         // Eventos OnClick
         // ===========================
         const handlerEnviarConfirmacion = async () => {
-            try {
-                // Aquí puedes combinar la información de ambos invitados
-                const payload = {
-                    idLink: link.value.id,
-                    asistenciaInvitado1: asistenciaInvitado1.value,
-                    asistenciaInvitado2: asistenciaInvitado2.value || null,
-                    comentario: comentario.value
-                };
+             if (loadingConfirmacion.value) return; // evitar doble click
+             triggerProgressBar("btn-send-confirmation");
+             loadingConfirmacion.value = true;
+             progress.value = 0;
+ 
+           // Simulamos progreso hasta el 90%
+            const interval = setInterval(() => {
+                if (progress.value < 95) {
+                progress.value += Math.random() * 5; // avanza de forma natural
+                if (progress.value > 95) progress.value = 95;
+                }
+            }, 200);
 
+            try {
                 // Llamamos a la función que guarda la asistencia
                 await confirmarAsistencia(link.value.id);
+                // Al terminar, completamos la barra
+                progress.value = 100;
             } catch (err) {
                 console.error("Error al enviar confirmación:", err);
+            }
+            finally {
+                 clearInterval(interval);
+                // Mantenemos el 100% visible un momento
+                setTimeout(() => {
+                loadingConfirmacion.value = false;
+                progress.value = 0;
+                }, 800);
             }
         };
 
         const handlerEnviarDeseos = async () => {
+
+            if (loadingDeseos.value) return; // evitar doble click
+             triggerProgressBar("btn-send-wishes");
+             loadingDeseos.value = true;
+             progressDeseos.value = 0;
+
+            const interval = setInterval(() => {
+                if (progressDeseos.value < 95) {
+                progressDeseos.value += Math.random() * 5; // avanza de forma natural
+                if (progressDeseos.value > 95) progressDeseos.value = 95;
+                }
+            }, 200);
             try {
                 const payload = {
                     idLink: link.value.id,
@@ -184,10 +274,36 @@ const app = createApp({
                 };
                 // Llamamos a la función que guarda la asistencia
                 await enviarDeseo(payload.idLink, payload.nombre, payload.comentario);
+
+                progressDeseos.value = 100;
             } catch (err) {
                 console.error("Error al enviar confirmación:", err);
             }
+            finally {
+                clearInterval(interval);
+                setTimeout(() => {
+                    loadingDeseos.value = false;        // Vue reactive ref
+                    progressDeseos.value = 0;           // reset barra
+                    const button = document.getElementById('btn-send-wishes');
+                    if (button) button.classList.remove('loading', 'active'); // quitar clases
+                }, 800);
+            }
         };
+
+        function triggerProgressBar(buttonId) {
+            const button = document.getElementById(buttonId);
+            if (!button) return;
+
+            if (!button.classList.contains("active")) {
+                button.classList.add("active", "loading"); // agregamos clase loading
+
+                // Limpiar la barra si estaba en algún estado anterior
+                const progress = button.querySelector('.progress');
+                if (progress) progress.style.width = '0%';
+            }
+
+            return button.querySelector('.progress'); // retornamos la barra para manipularla
+        }
 
         function toggle(index) {
             activeIndex.value = activeIndex.value === index ? null : index;
@@ -222,6 +338,10 @@ const app = createApp({
             comentarioDeseos,
             mostrarConfirmacionDeseos,
             activeIndex,
+            loadingConfirmacion,
+            progress,
+            loadingDeseos,
+            progressDeseos,
             handlerEnviarConfirmacion,
             handlerEnviarDeseos,
             toggle
