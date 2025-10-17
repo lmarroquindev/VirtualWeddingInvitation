@@ -46,12 +46,23 @@ function updateIcon() {
       .catch(err => console.log("Autoplay bloqueado:", err));
   }
 
-  // Click o tap en el overlay inicia la música y lo oculta
-  overlay.addEventListener("click", () => {
+    const musicMutedCookie = getCookie("music_muted");
+    if (musicMutedCookie) {
+    // Si existe la cookie, ocultamos y removemos el overlay inmediatamente
     overlay.classList.add("hidden");
-    setTimeout(() => overlay.remove(), 600);
-    tryStartMusic();
-  });
+    overlay.remove()
+    music.pause(); // opcional, asegurarse que no se reproduzca
+    updateIcon();  // actualiza icono según estado
+    } else {
+    // Si no hay cookie, se muestra normalmente
+    overlay.classList.remove("hidden");
+    overlay.addEventListener("click", () => {
+        overlay.classList.add("hidden");
+        setTimeout(() => overlay.remove(), 600);
+        tryStartMusic();
+    });
+    }
+
 
   // ESCUCHAR eventos nativos del audio para mantener el icono sincronizado
   music.addEventListener("play", updateIcon);
@@ -61,16 +72,16 @@ function updateIcon() {
   music.addEventListener("volumechange", updateIcon);
 
   // Control de música manual
-  toggleBtn.addEventListener("click", () => {
+   toggleBtn.addEventListener("click", () => {
     if (music.paused) {
       music.play()
-        .then(() => {
-          /* El evento 'play' llamará a updateIcon */
-        })
-        .catch(err => console.log("No se pudo reproducir:", err));
+      .then(() => {
+        deleteCookie("music_muted"); // si activa audio, borramos cookie
+      })
+      .catch(err => console.log("No se pudo reproducir:", err));
     } else {
       music.pause();
-      // el evento 'pause' llamará a updateIcon
+      setCookie("music_muted", "true", 0.5); // si pausa audio, guardamos cookie
     }
   });
 
@@ -85,6 +96,25 @@ function updateIcon() {
   // Inicializa el icono según el estado inicial del audio
   updateIcon();
 });
+
+// Guardar cookie simple
+function setCookie(name, value, days = 1) {
+  const expires = new Date(Date.now() + days * 864e5).toUTCString();
+  document.cookie = name + '=' + encodeURIComponent(value) + '; expires=' + expires + '; path=/';
+}
+
+// Leer cookie
+function getCookie(name) {
+  return document.cookie.split('; ').reduce((r, v) => {
+    const parts = v.split('=');
+    return parts[0] === name ? decodeURIComponent(parts[1]) : r
+  }, '');
+}
+
+// Borrar cookie
+function deleteCookie(name) {
+  setCookie(name, '', -1);
+}
 
 
 document.addEventListener('DOMContentLoaded', function() {

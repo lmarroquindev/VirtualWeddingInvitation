@@ -1,0 +1,20 @@
+{
+  "name": "Luis & Michelle | ¡Nos Casamos!",
+  "short_name": "Boda",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#c6a866",
+  "icons": [
+    {
+      "src": "/img/icono.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/img/icono.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
