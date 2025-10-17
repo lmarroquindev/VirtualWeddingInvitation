@@ -208,7 +208,8 @@
                 </form>
             </section>
 
-            <section id="compartir" v-show="link" class="content-section final-call light-bg">
+            <section id="compartir" v-show="link && link?.mostrarSeccionCompartirFotos"
+                class="content-section final-call light-bg">
                 <h2>Comparte Tus Recuerdos</h2>
                 <p>¡Ayúdanos a recordar cada momento! Sube las fotos que tomes durante la celebración a nuestra galería
                     compartida.</p>
@@ -247,7 +248,8 @@
                 </form>
             </section>
 
-            <section id="faq" v-show="link && preguntas?.length > 0" class="content-section light-bg">
+            <section id="faq" v-show="link && link?.mostrarSeccionQA && preguntas?.length > 0"
+                class="content-section light-bg">
                 <h2 class="section-title-qa">Q & A</h2>
                 <p class="section-description-qa">
                     Para todos nuestros amigos y familiares que tienen muchas preguntas, ¡revisen nuestro Q & A primero!

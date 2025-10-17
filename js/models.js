@@ -26,7 +26,9 @@ class Link {
         comentario = "",
         activo = true,
         dedicatoriaInvitado1 = "",
-        dedicatoriaInvitado2 = ""
+        dedicatoriaInvitado2 = "",
+        mostrarSeccionCompartirFotos = false,
+        mostrarSeccionQA = false
     } = {}) {
         this.id = id;
         this.idEvento = idEvento;
@@ -42,7 +44,9 @@ class Link {
         this.comentario = comentario;
         this.activo = activo;
         this.dedicatoriaInvitado1 = dedicatoriaInvitado1,
-        this.dedicatoriaInvitado2 = dedicatoriaInvitado2
+        this.dedicatoriaInvitado2 = dedicatoriaInvitado2,
+        this.mostrarSeccionCompartirFotos = mostrarSeccionCompartirFotos,
+        this.mostrarSeccionQA = mostrarSeccionQA
     }
 }
 
