@@ -224,12 +224,12 @@
                 <h2>Comparte Tus Recuerdos</h2>
                 <p>¡Ayúdanos a recordar cada momento! Sube las fotos que tomes durante la celebración a nuestra galería
                     compartida.</p>
-                <a href="#" class="btn-gallery estilobloqueado" @click.prevent>
+                <!-- <a href="#" class="btn-gallery estilobloqueado" @click.prevent>
+                    <i class="fas fa-camera"></i> Subir Fotos Aquí
+                </a>-->
+                <a :href="eventos[0]?.photoUrl" target="_blank" class="btn-gallery">
                     <i class="fas fa-camera"></i> Subir Fotos Aquí
                 </a>
-                <!-- <a href="https://photos.app.goo.gl/TUENLACEAQUI" target="_blank" class="btn-gallery">
-                    <i class="fas fa-camera"></i> Subir Fotos Aquí
-                </a> -->
                 <!-- Mensaje debajo del botón -->
                 <p class="btn-message">
                     Esta función estará habilitada el día del evento
