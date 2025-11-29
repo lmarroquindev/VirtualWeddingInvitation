@@ -3,10 +3,11 @@
 // ========================================================
 
 class Evento {
-    constructor({ id = null, nombre = "", fechaHoraEvento = "" } = {}) {
+    constructor({ id = null, nombre = "", fechaHoraEvento = "", photoUrl="" } = {}) {
         this.id = id;
         this.nombre = nombre;
         this.fechaHoraEvento = fechaHoraEvento; // string en formato ISO
+        this.photoUrl = photoUrl;
     }
 }
 
